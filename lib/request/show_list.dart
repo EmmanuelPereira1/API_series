@@ -1,3 +1,4 @@
+import 'package:api_series/pages/show_info.dart';
 import 'package:api_series/request/show_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -107,25 +108,46 @@ class _ShowsListState extends State<ShowsList> {
                                   children: [
                                     Card(
                                       color: Colors.transparent,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                  show.imageThumbnailPath),
-                                              fit: BoxFit.cover,
-                                              opacity: 1),
-                                          borderRadius:
-                                              const BorderRadius.all(
-                                                  Radius.circular(10)),
-                                          color: Colors.black,
+                                      child: Ink(
+                                        child: InkWell(
+                                          onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: ((context) =>
+                                                          ShowInfo(
+                                                              id: show.id,
+                                                              name: show.name,
+                                                              country: show.country,
+                                                              network: show.network,
+                                                              startDate: show.startDate,
+                                                              status: show.status,
+                                                              imageThumbnailPath: show.imageThumbnailPath,
+                                                              )),
+                                                    ),
+                                                  );
+                                                },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      show.imageThumbnailPath),
+                                                  fit: BoxFit.cover,
+                                                  opacity: 1),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10)),
+                                              color: Colors.black,
+                                            ),
+                                            height: 230,
+                                            width: 140,
+                                            // child: ListTile(
+                                            //     // onTap: () => Navigator.of(context).push(
+                                            //     //   MaterialPageRoute(
+                                            //     //     builder: (context) => CardsInformation(name: show.name, image: show.image, flavorText: show.flavorText,))),
+                                            //     ),
+                                          ),
                                         ),
-                                        height: 230,
-                                        width: 140,
-                                        // child: ListTile(
-                                        //     // onTap: () => Navigator.of(context).push(
-                                        //     //   MaterialPageRoute(
-                                        //     //     builder: (context) => CardsInformation(name: show.name, image: show.image, flavorText: show.flavorText,))),
-                                        //     ),
                                       ),
                                     ),
                                   ],

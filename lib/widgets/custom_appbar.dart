@@ -13,22 +13,22 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       floating: true,
       backgroundColor: Colors.transparent,
       centerTitle: true,
-      leading: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    SizedBox(width: 20),
-                    Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                    ),
-                  ],
-                )
-              ],
-            ),
+      // leading: Column(
+      //   mainAxisAlignment: MainAxisAlignment.start,
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           SizedBox(height: 20),
+      //           Row(
+      //             children: [
+      //               SizedBox(width: 20),
+      //               Icon(
+      //                 Icons.menu,
+      //                 color: Colors.white,
+      //               ),
+      //             ],
+      //           )
+      //         ],
+      //       ),
       title:
       Container(
         height: 35,
