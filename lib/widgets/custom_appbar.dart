@@ -13,16 +13,32 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       floating: true,
       backgroundColor: Colors.transparent,
       centerTitle: true,
-      leading: 
-        Builder(
-          builder: ((context) {
-            return IconButton(
-              icon: const Icon(Icons.align_horizontal_right),
-              onPressed: () => Scaffold.of(context).openDrawer(),
-            );
-          }),
-        ),
-      // title:
+      leading: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    SizedBox(width: 20),
+                    Icon(
+                      Icons.menu,
+                      color: Colors.white,
+                    ),
+                  ],
+                )
+              ],
+            ),
+      title:
+      Container(
+        height: 35,
+        width: 100,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("lib/images/showanalytic_logo.png"),
+            fit: BoxFit.cover),
+      ),
+      ),
       actions: [
         Column(
           children: [
@@ -30,17 +46,18 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
             Builder(
               builder: ((context) {
                 return IconButton(
-                  icon: const Icon(Icons.search), iconSize: 30,
+                  icon: const Icon(Icons.search),
+                  iconSize: 30,
                   onPressed: () {},
                 );
               }),
             ),
           ],
         )
-      ],
-    );
+      ]);
   }
 
   @override
   Size get preferredSize => const Size.fromHeight(60.0);
 }
+
