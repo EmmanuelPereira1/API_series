@@ -1,7 +1,10 @@
 import 'package:api_series/config/theme.dart';
 import 'package:flutter/material.dart';
 
+
+import 'login/login_page.dart';
 import 'pages/home_page.dart';
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -13,7 +16,11 @@ class MyApp extends StatelessWidget {
         title: 'Show Analytic',
         theme: theme(),
         debugShowCheckedModeBanner: false,
-        home: const HomePage(),
+
+        home: const LoginPage(),
+
+      
+
       );
   }
 }
