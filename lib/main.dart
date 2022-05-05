@@ -6,6 +6,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
-    const LoginPage(),
+    const MyApp(),
     );
 }

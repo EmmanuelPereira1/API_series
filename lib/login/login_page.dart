@@ -1,12 +1,11 @@
-import 'dart:io';
 import 'package:api_series/login/hometest.dart';
+import 'package:api_series/login/register/register.dart';
 import 'package:api_series/request/get_api.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({ Key? key }) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -16,16 +15,16 @@ class _LoginPageState extends State<LoginPage> {
   final _messangerKey = GlobalKey<ScaffoldMessengerState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  bool isLogin = false;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    login();
     request();
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
@@ -34,69 +33,92 @@ class _LoginPageState extends State<LoginPage> {
     return MaterialApp(
       scaffoldMessengerKey: _messangerKey,
       home: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SafeArea(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextFormField(
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        labelText: "EMAIL",
-                        border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.email), 
-                      ),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: SafeArea(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextFormField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      labelText: "EMAIL",
+                      border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.email),
                     ),
-                    const SizedBox(
-                      height: 15,
-                      ),
-                    TextFormField(
-                      controller: passwordController,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
+                    controller: passwordController,
                     obscureText: true,
-                      decoration: const InputDecoration(
-                        labelText: "PASSWORD",
-                        border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.email), 
-                      ),
+                    decoration: const InputDecoration(
+                      labelText: "PASSWORD",
+                      border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.email),
                     ),
-                    const SizedBox(
-                      height: 45,
-                    ),
-                    OutlinedButton.icon(onPressed: () async {
-                      login();
-                    },
-                    icon: const Icon(Icons.login),
-                    label: const Text("LOGIN")
-                    )
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 45,
+                  ),
+                  OutlinedButton.icon(
+                      onPressed: () async {
+                        await login();
+                        if (isLogin == true) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => const HomeTest())));
+                        } else {
+                          _messangerKey.currentState?.showSnackBar(
+                              const SnackBar(content: Text('puts campeão')));
+                        }
+                      },
+                      icon: const Icon(Icons.login),
+                      label: const Text("LOGIN")),
+
+                      OutlinedButton.icon(
+                      onPressed: () {
+                        
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => const RegisterApp())));
+                                  },
+                      icon: const Icon(Icons.login),
+                      label: const Text("REGISTER"))
+                ],
               ),
             ),
           ),
         ),
+      ),
     );
   }
 
-  Future<void> login() async{
-    if(passwordController.text.isNotEmpty && emailController.text.isNotEmpty){
+  Future<bool> login() async {
+    if (passwordController.text.isNotEmpty && emailController.text.isNotEmpty) {
       var dio = Dio();
       var url = "https://academy-auth.herokuapp.com/login";
       var response = await dio.post(url,
-      data: ({
-      'email': emailController.text,
-      'password': passwordController.text}));
-      if(response.statusCode==200) {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const HomeTest()));
+          data: ({
+            'email': emailController.text,
+            'password': passwordController.text
+          }));
+      if (response.statusCode == 201) {
+        return isLogin = true;
       } else {
-        _messangerKey.currentState?.showSnackBar
-        ( SnackBar(content: Text(response.data.toString())));
+        return isLogin = false;
       }
     } else {
-      _messangerKey.currentState?.showSnackBar
-      (const  SnackBar(content: Text('Black Field Not Allowed.')));
+      _messangerKey.currentState?.showSnackBar(
+        const SnackBar(
+          content: Text('Black Field Not Allowed.'),
+        ),
+      );
+      return false;
     }
   }
-
 }
