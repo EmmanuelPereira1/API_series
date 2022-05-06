@@ -65,11 +65,11 @@ class _ShowInfoState extends State<ShowInfo> {
                       aspectRatio: 400 / 451,
                       child: Container(
                         decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(widget.imageThumbnailPath),
-                                fit: BoxFit.fitWidth,
-                                ),
+                          image: DecorationImage(
+                            image: NetworkImage(widget.imageThumbnailPath),
+                            fit: BoxFit.fitWidth,
                           ),
+                        ),
                       ),
                     ),
                     Container(
@@ -87,28 +87,43 @@ class _ShowInfoState extends State<ShowInfo> {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.fromLTRB(10, 365, 30, 2),
-                      child: Row(
+                      margin: const EdgeInsets.fromLTRB(15, 335, 30, 2),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(widget.status,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3!
-                                  .copyWith(fontWeight: FontWeight.bold)),
-                          const SizedBox(width: 5),
-                          const Icon(Icons.circle, color: Colors.white, size: 6),
-                          const SizedBox(width: 5),
-                          Text(widget.country,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3!
-                                  .copyWith(fontWeight: FontWeight.bold)),
-                          const SizedBox(width: 10),
-                          Text(widget.network,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3!
-                                  .copyWith(fontWeight: FontWeight.bold)),
+                          Text(widget.name,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(fontWeight: FontWeight.bold)),
+                                      const SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Text(widget.status,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline4!
+                                      .copyWith(fontWeight: FontWeight.normal)),
+                              const SizedBox(width: 6),
+                              const Icon(Icons.circle,
+                                  color: Colors.white, size: 6),
+                              const SizedBox(width: 6),
+                              Text(widget.country,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline4!
+                                      .copyWith(fontWeight: FontWeight.normal)),
+                              const SizedBox(width: 6),
+                              const Icon(Icons.circle,
+                                  color: Colors.white, size: 6),
+                              const SizedBox(width: 6),
+                              Text(widget.network,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline4!
+                                      .copyWith(fontWeight: FontWeight.normal)),
+                            ],
+                          ),
                         ],
                       ),
                     )
