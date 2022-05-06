@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../request/get_api.dart';
 import '../hometest.dart';
@@ -90,6 +92,7 @@ class _RegisterAppState extends State<RegisterApp> {
                   OutlinedButton.icon(
                       onPressed: () async {
                         await register();
+                        await saveCredentials();
                      if (isRegister == true) {
                           Navigator.push(
                               context,
@@ -133,4 +136,25 @@ class _RegisterAppState extends State<RegisterApp> {
         }
     }
   }
+
+  Future<void> saveCredentials() async  { if (
+  passwordController.text.isNotEmpty &&
+  emailController.text.isNotEmpty &&
+  firstNameController.text.isNotEmpty &&
+    lastNameController.text.isNotEmpty){
+    final firestore = FirebaseFirestore.instance;
+    var currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser?.uid != null) {
+      await firestore.collection("users").doc(currentUser!.uid).set({
+        "first_name": firstNameController.text,
+        "last_name": lastNameController.text,
+        "email": emailController.text,
+        "password": passwordController.text,
+      });
+      // await firestore.collection("users").doc(currentUser.uid).update({
+      //   "tag": tagText,
+      // });
+    }
+  }
+}
 }
