@@ -1,7 +1,9 @@
 import 'package:api_series/login/hometest.dart';
 import 'package:api_series/login/register/register.dart';
 import 'package:api_series/request/get_api.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -122,3 +124,4 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 }
+
