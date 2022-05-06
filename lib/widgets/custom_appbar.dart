@@ -8,27 +8,11 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      toolbarHeight: 60,
+      toolbarHeight: 70,
       elevation: 0,
       floating: true,
       backgroundColor: Colors.transparent,
       centerTitle: true,
-      // leading: Column(
-      //   mainAxisAlignment: MainAxisAlignment.start,
-      //   crossAxisAlignment: CrossAxisAlignment.start,
-      //         children: [
-      //           SizedBox(height: 20),
-      //           Row(
-      //             children: [
-      //               SizedBox(width: 20),
-      //               Icon(
-      //                 Icons.menu,
-      //                 color: Colors.white,
-      //               ),
-      //             ],
-      //           )
-      //         ],
-      //       ),
       title:
       Container(
         height: 35,
@@ -58,6 +42,6 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(60.0);
+  Size get preferredSize => const Size.fromHeight(70.0);
 }
 

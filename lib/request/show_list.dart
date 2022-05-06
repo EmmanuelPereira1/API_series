@@ -82,8 +82,10 @@ class _ShowsListState extends State<ShowsList> {
               const SizedBox(width: 30),
               Text(
                 "RUNNING",
-                style: Theme.of(context).textTheme.headline3!.copyWith(
-                    fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -103,30 +105,29 @@ class _ShowsListState extends State<ShowsList> {
                               final show = showRepo.shows[index];
                               if (show.status == "Running") {
                                 return Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Card(
                                       color: Colors.transparent,
                                       child: Ink(
                                         child: InkWell(
                                           onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: ((context) =>
-                                                          ShowInfo(
-                                                              id: show.id,
-                                                              name: show.name,
-                                                              country: show.country,
-                                                              network: show.network,
-                                                              startDate: show.startDate,
-                                                              status: show.status,
-                                                              imageThumbnailPath: show.imageThumbnailPath,
-                                                              )),
-                                                    ),
-                                                  );
-                                                },
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: ((context) => ShowInfo(
+                                                      id: show.id,
+                                                      name: show.name,
+                                                      country: show.country,
+                                                      network: show.network,
+                                                      startDate: show.startDate,
+                                                      status: show.status,
+                                                      imageThumbnailPath: show
+                                                          .imageThumbnailPath,
+                                                    )),
+                                              ),
+                                            );
+                                          },
                                           child: Container(
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
@@ -140,12 +141,7 @@ class _ShowsListState extends State<ShowsList> {
                                               color: Colors.black,
                                             ),
                                             height: 230,
-                                            width: 140,
-                                            // child: ListTile(
-                                            //     // onTap: () => Navigator.of(context).push(
-                                            //     //   MaterialPageRoute(
-                                            //     //     builder: (context) => CardsInformation(name: show.name, image: show.image, flavorText: show.flavorText,))),
-                                            //     ),
+                                            width: 160,
                                           ),
                                         ),
                                       ),
@@ -153,7 +149,7 @@ class _ShowsListState extends State<ShowsList> {
                                   ],
                                 );
                               } else {
-                                return SizedBox(width: 0);
+                                return const SizedBox(width: 0);
                               }
                             }),
                             separatorBuilder: (_, __) => const Divider(),
@@ -170,8 +166,10 @@ class _ShowsListState extends State<ShowsList> {
               const SizedBox(width: 30),
               Text(
                 "ENDED",
-                style: Theme.of(context).textTheme.headline3!.copyWith(
-                    fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -191,36 +189,51 @@ class _ShowsListState extends State<ShowsList> {
                               final show = showRepo.shows[index];
                               if (show.status == "Ended") {
                                 return Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Card(
                                       color: Colors.transparent,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                  show.imageThumbnailPath),
-                                              fit: BoxFit.cover,
-                                              opacity: 1),
-                                          borderRadius:
-                                              const BorderRadius.all(
-                                                  Radius.circular(10)),
-                                          color: Colors.black,
+                                      child: Ink(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: ((context) => ShowInfo(
+                                                      id: show.id,
+                                                      name: show.name,
+                                                      country: show.country,
+                                                      network: show.network,
+                                                      startDate: show.startDate,
+                                                      status: show.status,
+                                                      imageThumbnailPath: show
+                                                          .imageThumbnailPath,
+                                                    )),
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      show.imageThumbnailPath),
+                                                  fit: BoxFit.cover,
+                                                  opacity: 1),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10)),
+                                              color: Colors.black,
+                                            ),
+                                            height: 230,
+                                            width: 160,
+                                          ),
                                         ),
-                                        height: 230,
-                                        width: 140,
-                                        // child: ListTile(
-                                        //     // onTap: () => Navigator.of(context).push(
-                                        //     //   MaterialPageRoute(
-                                        //     //     builder: (context) => CardsInformation(name: show.name, image: show.image, flavorText: show.flavorText,))),
-                                        //     ),
                                       ),
                                     ),
                                   ],
                                 );
                               } else {
-                                return SizedBox(width: 0);
+                                return const SizedBox(width: 0);
                               }
                             }),
                             separatorBuilder: (_, __) => const Divider(),
@@ -237,8 +250,10 @@ class _ShowsListState extends State<ShowsList> {
               const SizedBox(width: 30),
               Text(
                 "UNDETERMINED",
-                style: Theme.of(context).textTheme.headline3!.copyWith(
-                    fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -258,30 +273,45 @@ class _ShowsListState extends State<ShowsList> {
                               final show = showRepo.shows[index];
                               if (show.status == "To Be Determined") {
                                 return Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Card(
                                       color: Colors.transparent,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                  show.imageThumbnailPath),
-                                              fit: BoxFit.cover,
-                                              opacity: 1),
-                                          borderRadius:
-                                              const BorderRadius.all(
-                                                  Radius.circular(10)),
-                                          color: Colors.black,
+                                      child: Ink(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: ((context) => ShowInfo(
+                                                      id: show.id,
+                                                      name: show.name,
+                                                      country: show.country,
+                                                      network: show.network,
+                                                      startDate: show.startDate,
+                                                      status: show.status,
+                                                      imageThumbnailPath: show
+                                                          .imageThumbnailPath,
+                                                    )),
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      show.imageThumbnailPath),
+                                                  fit: BoxFit.cover,
+                                                  opacity: 1),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10)),
+                                              color: Colors.black,
+                                            ),
+                                            height: 230,
+                                            width: 160,
+                                          ),
                                         ),
-                                        height: 230,
-                                        width: 140,
-                                        // child: ListTile(
-                                        //     // onTap: () => Navigator.of(context).push(
-                                        //     //   MaterialPageRoute(
-                                        //     //     builder: (context) => CardsInformation(name: show.name, image: show.image, flavorText: show.flavorText,))),
-                                        //     ),
                                       ),
                                     ),
                                   ],
