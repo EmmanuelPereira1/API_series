@@ -1,3 +1,4 @@
+import 'package:api_series/config/gradientbackground.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,15 +18,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: <Color>[
-              Color(0XFF101A26),
-              Color(0XFF026873),
-              Color(0xFF35F2DF)
-            ])),
+        decoration: GradientColor.gradient,
         child: Scaffold(
             bottomNavigationBar: SnakeNavigationBar.color(
               backgroundColor: Color.fromARGB(255, 0, 70, 78).withOpacity(0.8),

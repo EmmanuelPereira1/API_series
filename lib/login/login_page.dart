@@ -1,3 +1,4 @@
+import 'package:api_series/config/gradientbackground.dart';
 import 'package:api_series/login/hometest.dart';
 import 'package:api_series/login/register/register.dart';
 import 'package:api_series/request/get_api.dart';
@@ -33,39 +34,49 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      scaffoldMessengerKey: _messangerKey,
       home: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SafeArea(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextFormField(
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      labelText: "EMAIL",
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.email),
+        body: Container(
+          decoration: GradientColor.gradient,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SafeArea(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextFormField(
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        labelText: "EMAIL",
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25))),
+                        suffixIcon: Icon(Icons.email),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: "PASSWORD",
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.email),
+                    const SizedBox(
+                      height: 15,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 45,
-                  ),
-                  OutlinedButton.icon(
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        labelText: "PASSWORD",
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25))),
+                        suffixIcon: Icon(Icons.key
+                         ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 45,
+                    ),
+                    OutlinedButton.icon(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0XFF026873)),
+                      ),
                       onPressed: () async {
                         await login();
                         if (isLogin == true) {
@@ -78,20 +89,33 @@ class _LoginPageState extends State<LoginPage> {
                               const SnackBar(content: Text('puts campeão')));
                         }
                       },
-                      icon: const Icon(Icons.login),
-                      label: const Text("LOGIN")),
-
-                      OutlinedButton.icon(
+                      icon: const Icon(Icons.login,
+                      color: Colors.white,),
+                      label: const Text(
+                        "LOGIN",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    OutlinedButton.icon(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0XFF026873)),
+                      ),
                       onPressed: () {
-                        
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) => const RegisterApp())));
-                                  },
-                      icon: const Icon(Icons.login),
-                      label: const Text("REGISTER"))
-                ],
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => const RegisterApp())));
+                      },
+                      icon: const Icon(Icons.login_outlined,
+                       color: Colors.white,),
+                      label: const Text(
+                        "REGISTER",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -124,4 +148,3 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 }
-

@@ -14,45 +14,45 @@ class LoginGoogle extends StatefulWidget {
 class _LoginGoogleState extends State<LoginGoogle> {
   @override
   Widget build(BuildContext context) => Padding(
-    padding: EdgeInsets.all(32),
+    padding: const EdgeInsets.all(32),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Spacer(),
-        FlutterLogo(size: 120),
-        Spacer(),
-        Align(
+        const Spacer(),
+        const FlutterLogo(size: 120),
+        const Spacer(),
+        const Align(
           alignment: Alignment.centerLeft,
           child: Text(
             'Salve',
           ),
         ),
-        SizedBox(height: 8),
-        Align(
+        const SizedBox(height: 8),
+        const Align(
           alignment: Alignment.centerLeft,
           child: Text(
             'LOGIN GOOGLE'
           ),
         ),
-        Spacer(),
+        const Spacer(),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
             primary: Colors.white,
             onPrimary: Colors.black,
-            minimumSize: Size(double.infinity,50)
+            minimumSize: const Size(double.infinity,50)
           ),
           onPressed: (){
             final provider = 
             Provider.of<GoogleSignInProvider>(context, listen: false);
             provider.googleLogin();
           },
-          icon: FaIcon(FontAwesomeIcons.google, color: Colors.red,),
-          label: Text('Sign Up with Google')
+          icon: const FaIcon(FontAwesomeIcons.google, color: Colors.red,),
+          label: const Text('Sign Up with Google')
           ),
-        SizedBox(height: 40),
+        const SizedBox(height: 40),
         RichText(
           text: 
-        TextSpan(
+        const TextSpan(
           text: 'num tem continha? :(',
           children: [
             TextSpan(
