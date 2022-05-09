@@ -34,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       home: Scaffold(
         body: Container(
           decoration: GradientColor.gradient,
@@ -44,6 +45,14 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('lib/images/showanalytic_logo.png'),
+                          scale: 1,
+                        ),
+                      ),
+                    ),
                     TextFormField(
                       controller: emailController,
                       decoration: const InputDecoration(
@@ -65,8 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                         border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(25))),
-                        suffixIcon: Icon(Icons.key
-                         ),
+                        suffixIcon: Icon(Icons.key),
                       ),
                     ),
                     const SizedBox(
@@ -89,8 +97,10 @@ class _LoginPageState extends State<LoginPage> {
                               const SnackBar(content: Text('puts campeão')));
                         }
                       },
-                      icon: const Icon(Icons.login,
-                      color: Colors.white,),
+                      icon: const Icon(
+                        Icons.login,
+                        color: Colors.white,
+                      ),
                       label: const Text(
                         "LOGIN",
                         style: TextStyle(color: Colors.white),
@@ -107,8 +117,10 @@ class _LoginPageState extends State<LoginPage> {
                             MaterialPageRoute(
                                 builder: ((context) => const RegisterApp())));
                       },
-                      icon: const Icon(Icons.login_outlined,
-                       color: Colors.white,),
+                      icon: const Icon(
+                        Icons.login_outlined,
+                        color: Colors.white,
+                      ),
                       label: const Text(
                         "REGISTER",
                         style: TextStyle(color: Colors.white),
