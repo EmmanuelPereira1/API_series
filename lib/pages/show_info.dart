@@ -1,11 +1,8 @@
-import 'package:api_series/config/theme.dart';
 import 'package:api_series/models/reviews_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
-import '../request/show_list.dart';
 import '../widgets/custom_appbar.dart';
 
 class ShowInfo extends StatefulWidget {
@@ -36,13 +33,12 @@ class _ShowInfoState extends State<ShowInfo> {
   @override
   void initState() {
     super.initState();
-    getIdUser();
     getFirstName();
   }
 
   String? first_name;
   String? id_user;
-  String? rating;
+  num? ratingReview;
   final TextEditingController _reviewController = TextEditingController();
   final storeMessage = FirebaseFirestore.instance;
   CollectionReference userRef =
@@ -146,7 +142,7 @@ class _ShowInfoState extends State<ShowInfo> {
                     const SizedBox(height: 5),
                     Container(
                       width: 350,
-                      height: 220,
+                      height: 240,
                       decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
@@ -183,7 +179,7 @@ class _ShowInfoState extends State<ShowInfo> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 30),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -200,23 +196,23 @@ class _ShowInfoState extends State<ShowInfo> {
                                     color: Colors.amber,
                                   ),
                                   onRatingUpdate: (rating) {
-                                    final postDoc =
-                                        storeMessage.collection("review").doc();
-                                    postDoc.update({
-                                      "rating": rating,
-                                    });
-                                    _reviewController.clear();
+                                    ratingReview = rating;
                                   },
                                 ),
                                 const SizedBox(height: 10),
                                 Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 6, vertical: 16),
+                                        horizontal: 50, vertical: 16),
                                     child: TextField(
+                                        style: const TextStyle(color: Colors.white),
                                         controller: _reviewController,
                                         decoration: InputDecoration(
                                           enabledBorder:
-                                              const OutlineInputBorder(
+                                              const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white)),
+                                          focusedBorder:
+                                              const UnderlineInputBorder(
                                                   borderSide: BorderSide(
                                                       color: Colors.white)),
                                           hintText: 'Review this show...',
@@ -227,22 +223,21 @@ class _ShowInfoState extends State<ShowInfo> {
                                               onPressed: () async {
                                                 if (_reviewController
                                                     .text.isNotEmpty) {
-                                                  final postDoc = storeMessage
-                                                      .collection("review")
+                                                  final reviewDoc = storeMessage
+                                                      .collection("reviews")
                                                       .doc();
-                                                  await postDoc.set({
+                                                  await reviewDoc.set({
                                                     "review_text":
                                                         _reviewController.text
                                                             .trim(),
                                                     "first_name": first_name,
-                                                    "id_user": id_user,
-                                                    "id": review!.id
+                                                    "rating": ratingReview,
                                                   });
                                                   _reviewController.clear();
                                                 }
                                               },
                                               icon: const Icon(Icons.send,
-                                                  color: Colors.black)),
+                                                  color: Colors.amber)),
                                         )))
                               ],
                             ),
@@ -262,18 +257,6 @@ class _ShowInfoState extends State<ShowInfo> {
       Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
       setState(() {
         first_name = data['first_name'];
-      });
-    });
-  }
-
-  Future<void> getIdUser() async {
-    var currentUser = FirebaseAuth.instance.currentUser;
-    final DocumentReference document =
-        FirebaseFirestore.instance.collection("users").doc(currentUser!.uid);
-    await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
-      Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
-      setState(() {
-        id_user = data[currentUser.uid];
       });
     });
   }

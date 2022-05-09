@@ -1,3 +1,4 @@
+import 'package:api_series/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -92,12 +93,13 @@ class _RegisterAppState extends State<RegisterApp> {
                   OutlinedButton.icon(
                       onPressed: () async {
                         await register();
+                        await signUp();
                         await saveCredentials();
                      if (isRegister == true) {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: ((context) => const HomeTest())));
+                                  builder: ((context) => const HomePage())));
                         } else {
                           _messangerKey.currentState?.showSnackBar(
                               const SnackBar(content: Text('puts campeão')));
@@ -157,4 +159,9 @@ class _RegisterAppState extends State<RegisterApp> {
     }
   }
 }
+
+Future signUp() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.toString(), password: passwordController.text.toString());
+  }
 }
