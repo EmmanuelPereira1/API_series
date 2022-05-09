@@ -92,6 +92,7 @@ class _RegisterAppState extends State<RegisterApp> {
                   OutlinedButton.icon(
                       onPressed: () async {
                         await register();
+                        await signUp();
                         await saveCredentials();
                      if (isRegister == true) {
                           Navigator.push(
@@ -157,4 +158,9 @@ class _RegisterAppState extends State<RegisterApp> {
     }
   }
 }
+
+Future signUp() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.toString(), password: passwordController.text.toString());
+  }
 }

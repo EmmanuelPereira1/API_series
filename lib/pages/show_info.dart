@@ -36,7 +36,7 @@ class _ShowInfoState extends State<ShowInfo> {
   @override
   void initState() {
     super.initState();
-    getIdUser();
+    // getIdUser();
     getFirstName();
   }
 
@@ -201,7 +201,7 @@ class _ShowInfoState extends State<ShowInfo> {
                                   ),
                                   onRatingUpdate: (rating) {
                                     final postDoc =
-                                        storeMessage.collection("review").doc();
+                                        storeMessage.collection("reviews").doc();
                                     postDoc.update({
                                       "rating": rating,
                                     });
@@ -228,15 +228,15 @@ class _ShowInfoState extends State<ShowInfo> {
                                                 if (_reviewController
                                                     .text.isNotEmpty) {
                                                   final postDoc = storeMessage
-                                                      .collection("review")
+                                                      .collection("reviews")
                                                       .doc();
                                                   await postDoc.set({
                                                     "review_text":
                                                         _reviewController.text
                                                             .trim(),
                                                     "first_name": first_name,
-                                                    "id_user": id_user,
-                                                    "id": review!.id
+                                                    // "id_user": id_user,
+                                                    // "id": review!.id
                                                   });
                                                   _reviewController.clear();
                                                 }
@@ -266,15 +266,15 @@ class _ShowInfoState extends State<ShowInfo> {
     });
   }
 
-  Future<void> getIdUser() async {
-    var currentUser = FirebaseAuth.instance.currentUser;
-    final DocumentReference document =
-        FirebaseFirestore.instance.collection("users").doc(currentUser!.uid);
-    await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
-      Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
-      setState(() {
-        id_user = data[currentUser.uid];
-      });
-    });
-  }
+  // Future<void> getIdUser() async {
+  //   var currentUser = FirebaseAuth.instance.currentUser;
+  //   final DocumentReference document =
+  //       FirebaseFirestore.instance.collection("users").doc(currentUser!.uid);
+  //   await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
+  //     Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
+  //     setState(() {
+  //       id_user = data[currentUser.uid];
+  //     });
+  //   });
+  // }
 }

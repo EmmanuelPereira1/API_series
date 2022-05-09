@@ -1,6 +1,7 @@
 import 'package:api_series/config/gradientbackground.dart';
 import 'package:api_series/login/hometest.dart';
 import 'package:api_series/login/register/register.dart';
+import 'package:api_series/pages/home_page.dart';
 import 'package:api_series/request/get_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
@@ -91,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: ((context) => const HomeTest())));
+                                  builder: ((context) => const HomePage())));
                         } else {
                           _messangerKey.currentState?.showSnackBar(
                               const SnackBar(content: Text('puts campeão')));
