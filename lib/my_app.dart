@@ -1,6 +1,7 @@
 import 'package:api_series/config/theme.dart';
 import 'package:api_series/login/google_sign_in.dart';
 import 'package:api_series/login/login_google.dart';
+import 'package:api_series/login/google_login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'login/login_page.dart';
@@ -17,7 +18,9 @@ class MyApp extends StatelessWidget {
           title: 'Show Analytic',
           theme: theme(),
           debugShowCheckedModeBanner: false,
-          home: const LoginPage(),
+
+          home: const GoogleLogin(),
+
         ),
   );
 
