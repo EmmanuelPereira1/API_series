@@ -20,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   double value = 0;
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
 
     return Container(
         decoration: GradientColor.gradient,
