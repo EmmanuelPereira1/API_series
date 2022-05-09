@@ -1,12 +1,13 @@
+import 'package:api_series/config/gradientbackground.dart';
+import 'package:api_series/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../request/get_api.dart';
-import '../hometest.dart';
 
 class RegisterApp extends StatefulWidget {
-  const RegisterApp({ Key? key }) : super(key: key);
+  const RegisterApp({Key? key}) : super(key: key);
 
   @override
   State<RegisterApp> createState() => _RegisterAppState();
@@ -19,7 +20,6 @@ class _RegisterAppState extends State<RegisterApp> {
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
   bool isRegister = false;
-
 
   @override
   void initState() {
@@ -37,75 +37,113 @@ class _RegisterAppState extends State<RegisterApp> {
     return MaterialApp(
       scaffoldMessengerKey: _messangerKey,
       home: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SafeArea(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextFormField(
-                    controller: firstNameController,
-                    decoration: const InputDecoration(
-                      labelText: "FIRST NAME",
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.email),
+        body: Container(
+          decoration: GradientColor.gradient,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SafeArea(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "lib/images/showanalytic_logo.png",
+                      width: 270,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    controller: lastNameController,
-                    decoration: const InputDecoration(
-                      labelText: "LAST NAME",
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.email),
+                    const SizedBox(height: 70),
+                    TextFormField(
+                      controller: firstNameController,
+                      decoration: const InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: "FIRST NAME",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        suffixIcon: Icon(Icons.person,
+                        color: Color(0XFF026873),),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      labelText: "EMAIL",
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.email),
+                    const SizedBox(
+                      height: 15,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: "PASSWORD",
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.email),
+                    TextFormField(
+                      controller: lastNameController,
+                      decoration: const InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: "LAST NAME",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        suffixIcon: Icon(Icons.person,
+                        color: Color(0XFF026873),),
+                     ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 45,
-                  ),
-                  OutlinedButton.icon(
-                      onPressed: () async {
-                        await register();
-                        await saveCredentials();
-                     if (isRegister == true) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) => const HomeTest())));
-                        } else {
-                          _messangerKey.currentState?.showSnackBar(
-                              const SnackBar(content: Text('puts campeão')));
-                        }
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: "EMAIL",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        suffixIcon: Icon(Icons.email,
+                        color: Color(0XFF026873),),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: "PASSWORD",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        suffixIcon: Icon(Icons.key,
+                        color: Color(0XFF026873),),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 45,
+                    ),
+                    OutlinedButton.icon(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0XFF026873)),
+                        ),
+                        onPressed: () async {
+                          await register();
+                          await saveCredentials();
+                          if (isRegister == true) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => const HomePage())));
+                          } else {
+                            _messangerKey.currentState?.showSnackBar(
+                                const SnackBar(content: Text('puts campeão')));
+                          }
                         },
-                      icon: const Icon(Icons.login),
-                      label: const Text("REGISTER"))
-                ],
+                        icon: const Icon(
+                          Icons.app_registration_outlined,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          "REGISTER",
+                          style: TextStyle(color: Colors.white),
+                        ))
+                  ],
+                ),
               ),
             ),
           ),
@@ -116,9 +154,9 @@ class _RegisterAppState extends State<RegisterApp> {
 
   Future register() async {
     if (passwordController.text.isNotEmpty &&
-    emailController.text.isNotEmpty &&
-    firstNameController.text.isNotEmpty &&
-    lastNameController.text.isNotEmpty) {
+        emailController.text.isNotEmpty &&
+        firstNameController.text.isNotEmpty &&
+        lastNameController.text.isNotEmpty) {
       var dio = Dio();
       var url = "https://academy-auth.herokuapp.com/register";
       var response = await dio.post(url,
@@ -128,33 +166,33 @@ class _RegisterAppState extends State<RegisterApp> {
             'email': emailController.text,
             'password': passwordController.text
           }));
-        if (response.statusCode == 201){
-            response.data;
-            isRegister = true;
-        } else {
-            return isRegister = false;
-        }
+      if (response.statusCode == 201) {
+        response.data;
+        isRegister = true;
+      } else {
+        return isRegister = false;
+      }
     }
   }
 
-  Future<void> saveCredentials() async  { if (
-  passwordController.text.isNotEmpty &&
-  emailController.text.isNotEmpty &&
-  firstNameController.text.isNotEmpty &&
-    lastNameController.text.isNotEmpty){
-    final firestore = FirebaseFirestore.instance;
-    var currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser?.uid != null) {
-      await firestore.collection("users").doc(currentUser!.uid).set({
-        "first_name": firstNameController.text,
-        "last_name": lastNameController.text,
-        "email": emailController.text,
-        "password": passwordController.text,
-      });
-      // await firestore.collection("users").doc(currentUser.uid).update({
-      //   "tag": tagText,
-      // });
+  Future<void> saveCredentials() async {
+    if (passwordController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        firstNameController.text.isNotEmpty &&
+        lastNameController.text.isNotEmpty) {
+      final firestore = FirebaseFirestore.instance;
+      var currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser?.uid != null) {
+        await firestore.collection("users").doc(currentUser!.uid).set({
+          "first_name": firstNameController.text,
+          "last_name": lastNameController.text,
+          "email": emailController.text,
+          "password": passwordController.text,
+        });
+        // await firestore.collection("users").doc(currentUser.uid).update({
+        //   "tag": tagText,
+        // });
+      }
     }
   }
-}
 }
