@@ -1,3 +1,4 @@
+import 'package:api_series/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -98,7 +99,7 @@ class _RegisterAppState extends State<RegisterApp> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: ((context) => const HomeTest())));
+                                  builder: ((context) => const HomePage())));
                         } else {
                           _messangerKey.currentState?.showSnackBar(
                               const SnackBar(content: Text('puts campeão')));
