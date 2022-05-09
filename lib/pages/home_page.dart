@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
             ])),
         child: Scaffold(
             bottomNavigationBar: SnakeNavigationBar.color(
-              backgroundColor: Color.fromARGB(255, 0, 70, 78).withOpacity(0.8),
+              backgroundColor: const Color.fromARGB(255, 0, 70, 78).withOpacity(0.8),
               snakeViewColor: const Color(0xFF03252D),
               shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
