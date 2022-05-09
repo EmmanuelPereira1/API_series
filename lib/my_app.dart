@@ -15,11 +15,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => ChangeNotifierProvider(
     create: (context) => GoogleSignInProvider(),
     child: MaterialApp(
-          
           title: 'Show Analytic',
           theme: theme(),
           debugShowCheckedModeBanner: false,
+
           home: const GoogleLogin(),
+
         ),
   );
 

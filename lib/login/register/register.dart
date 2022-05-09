@@ -123,6 +123,8 @@ class _RegisterAppState extends State<RegisterApp> {
                         ),
                         onPressed: () async {
                           await register();
+                                                  await signUp();
+
                           await saveCredentials();
                           if (isRegister == true) {
                             Navigator.push(
@@ -133,6 +135,7 @@ class _RegisterAppState extends State<RegisterApp> {
                             _messangerKey.currentState?.showSnackBar(
                                 const SnackBar(content: Text('puts campeão')));
                           }
+
                         },
                         icon: const Icon(
                           Icons.app_registration_outlined,
@@ -194,5 +197,12 @@ class _RegisterAppState extends State<RegisterApp> {
         // });
       }
     }
+  }
+}
+
+
+Future signUp() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.toString(), password: passwordController.text.toString());
   }
 }
