@@ -25,7 +25,7 @@ ThemeData theme() {
       headline4: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.normal,
-        fontSize: 16,
+        fontSize: 18,
         fontFamily: GoogleFonts.openSans().fontFamily,
       ),
       headline5: TextStyle(
