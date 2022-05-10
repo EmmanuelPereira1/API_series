@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 ThemeData theme() {
   return ThemeData(
+    iconTheme: IconThemeData(color: Colors.amber),
     // fontFamily: GoogleFonts.openSans().fontFamily,
     textTheme: TextTheme(
       headline1: TextStyle(
