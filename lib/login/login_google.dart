@@ -1,7 +1,10 @@
 import 'package:api_series/config/gradientbackground.dart';
 import 'package:api_series/login/google_sign_in.dart';
+import 'package:api_series/login/login_page.dart';
 import 'package:api_series/login/register/register.dart';
-import 'package:flutter/gestures.dart';
+import 'package:api_series/pages/home_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +19,9 @@ class LoginGoogle extends StatefulWidget {
 
 class _LoginGoogleState extends State<LoginGoogle> {
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+
+  return Scaffold(
     body: Scaffold(
       body: Container(
         decoration: GradientColor.gradient,
@@ -31,29 +36,28 @@ class _LoginGoogleState extends State<LoginGoogle> {
               const Spacer(),             
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0XFF026873),
-                  onPrimary: Color.fromARGB(255, 255, 255, 255),
+                  primary: const Color(0XFF026873),
+                  onPrimary: const Color.fromARGB(255, 255, 255, 255),
                   minimumSize: const Size(double.infinity,50)
                 ),
                 onPressed: (){
-                  final provider = 
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
-                  provider.googleLogin();
+                  Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => const LoginPage()));
                 },
                 icon: const FaIcon(Icons.login, color: Colors.white),
-                label: const Text('Sign Up with Google')
+                label: const Text('Login with Account')
                 ),
                 const SizedBox(height: 17),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0XFF026873),
+                  primary: const Color(0XFF026873),
                   onPrimary: Colors.white,
                   minimumSize: const Size(double.infinity,50)
                 ),
-                onPressed: (){
-                  final provider = 
+                onPressed: () async {
+                    final provider = 
                   Provider.of<GoogleSignInProvider>(context, listen: false);
-                  provider.googleLogin();
+                  provider.googleLogin(); 
                 },
                 icon: const FaIcon(FontAwesomeIcons.google, color: Colors.white,),
                 label: const Text('Sign Up with Google')
@@ -63,9 +67,8 @@ class _LoginGoogleState extends State<LoginGoogle> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterApp())
                 );
               },
-              child: const Text("Registrar",
+              child: const Text("Register Account",
               style: TextStyle(
-                
                 color: Colors.white,
                 decoration: TextDecoration.underline
               ),)),
@@ -76,4 +79,5 @@ class _LoginGoogleState extends State<LoginGoogle> {
       ),
     ),
   );
+}
 }
