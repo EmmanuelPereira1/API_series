@@ -60,8 +60,10 @@ class _RegisterAppState extends State<RegisterApp> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
-                        suffixIcon: Icon(Icons.person,
-                        color: Color(0XFF026873),),
+                        suffixIcon: Icon(
+                          Icons.person,
+                          color: Color(0XFF026873),
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -76,9 +78,11 @@ class _RegisterAppState extends State<RegisterApp> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
-                        suffixIcon: Icon(Icons.person,
-                        color: Color(0XFF026873),),
-                     ),
+                        suffixIcon: Icon(
+                          Icons.person,
+                          color: Color(0XFF026873),
+                        ),
+                      ),
                     ),
                     const SizedBox(
                       height: 15,
@@ -92,8 +96,10 @@ class _RegisterAppState extends State<RegisterApp> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
-                        suffixIcon: Icon(Icons.email,
-                        color: Color(0XFF026873),),
+                        suffixIcon: Icon(
+                          Icons.email,
+                          color: Color(0XFF026873),
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -109,8 +115,10 @@ class _RegisterAppState extends State<RegisterApp> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
-                        suffixIcon: Icon(Icons.key,
-                        color: Color(0XFF026873),),
+                        suffixIcon: Icon(
+                          Icons.key,
+                          color: Color(0XFF026873),
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -123,8 +131,7 @@ class _RegisterAppState extends State<RegisterApp> {
                         ),
                         onPressed: () async {
                           await register();
-                                                  await signUp();
-
+                          await signUp();
                           await saveCredentials();
                           if (isRegister == true) {
                             Navigator.push(
@@ -135,7 +142,6 @@ class _RegisterAppState extends State<RegisterApp> {
                             _messangerKey.currentState?.showSnackBar(
                                 const SnackBar(content: Text('puts campeão')));
                           }
-
                         },
                         icon: const Icon(
                           Icons.app_registration_outlined,
@@ -170,6 +176,7 @@ class _RegisterAppState extends State<RegisterApp> {
             'password': passwordController.text
           }));
       if (response.statusCode == 201) {
+        // FirebaseAuth.instance.currentUser!.isAnonymous;
         response.data;
         isRegister = true;
       } else {
@@ -198,12 +205,10 @@ class _RegisterAppState extends State<RegisterApp> {
       }
     }
   }
+
   Future signUp() async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.toString(), password: passwordController.text.toString());
+        email: emailController.text.toString(),
+        password: passwordController.text.toString());
   }
 }
-
-
-
-

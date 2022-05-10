@@ -1,5 +1,7 @@
 import 'package:api_series/config/gradientbackground.dart';
-import 'package:api_series/login/google_sign_in.dart';
+import 'package:api_series/login/google_sign_in_provider.dart';
+import 'package:api_series/login/login_body.dart';
+import 'package:api_series/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
@@ -40,11 +42,17 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.white,
                           ),
                         ),
-                        onTap: () {
-                          final provider = Provider.of<GoogleSignInProvider>(
+                        onTap: () async {
+                           final provider = Provider.of<GoogleSignInProvider>(
                               context,
                               listen: false);
-                          provider.logoutGoogle();
+                          await provider.logoutGoogle();
+                          if (FirebaseAuth.instance.currentUser!.isAnonymous) {
+                            Navigator.of(context).pushReplacement(
+                             MaterialPageRoute(builder: (context) => const LoginPage()), 
+                            );
+                          }
+                          
                         },
                       ),
                     ]))),

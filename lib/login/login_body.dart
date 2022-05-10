@@ -1,23 +1,20 @@
 import 'package:api_series/config/gradientbackground.dart';
-import 'package:api_series/login/google_sign_in.dart';
-import 'package:api_series/login/login_page.dart';
+import 'package:api_series/login/google_sign_in_provider.dart';
+import 'package:api_series/login/login_api.dart';
 import 'package:api_series/login/register/register.dart';
-import 'package:api_series/pages/home_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 
-class LoginGoogle extends StatefulWidget {
-  const LoginGoogle({ Key? key }) : super(key: key);
+class LoginBody extends StatefulWidget {
+  const LoginBody({ Key? key }) : super(key: key);
 
   @override
-  State<LoginGoogle> createState() => _LoginGoogleState();
+  State<LoginBody> createState() => _LoginBodyState();
 }
 
-class _LoginGoogleState extends State<LoginGoogle> {
+class _LoginBodyState extends State<LoginBody> {
   @override
   Widget build(BuildContext context) {
 
@@ -42,7 +39,7 @@ class _LoginGoogleState extends State<LoginGoogle> {
                 ),
                 onPressed: (){
                   Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                    context, MaterialPageRoute(builder: (context) => const LoginApi()));
                 },
                 icon: const FaIcon(Icons.login, color: Colors.white),
                 label: const Text('Login with Account')
@@ -57,7 +54,10 @@ class _LoginGoogleState extends State<LoginGoogle> {
                 onPressed: () async {
                     final provider = 
                   Provider.of<GoogleSignInProvider>(context, listen: false);
-                  provider.googleLogin(); 
+                  provider.googleLogin();
+                    final save =
+                  Provider.of<GoogleSignInProvider>(context, listen: false); 
+                  save.saveCredentialsGoogle();
                 },
                 icon: const FaIcon(FontAwesomeIcons.google, color: Colors.white,),
                 label: const Text('Sign Up with Google')

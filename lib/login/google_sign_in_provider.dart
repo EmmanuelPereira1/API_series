@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -30,4 +31,19 @@ class GoogleSignInProvider extends ChangeNotifier {
     await googleSignIn.disconnect();
     FirebaseAuth.instance.signOut();
   }
+
+  Future saveCredentialsGoogle() async {
+      final user = FirebaseAuth.instance.currentUser!;
+      final firestore = FirebaseFirestore.instance;
+      var currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser?.uid != null) {
+        await firestore.collection("users").doc().set
+        ({
+          "first_name": user.displayName,
+          "email": user.email,
+        });
+      }
+    }
+
+    
 }
