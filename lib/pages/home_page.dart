@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
             body: NestedScrollView(
               floatHeaderSlivers: true,
               headerSliverBuilder: (context, innerBoxIsScrolled) =>
-                  [const CustomAppBar()],
+                  [const CustomAppbar()],
               body: const ShowsList(),
             )));
     // return Scaffold(

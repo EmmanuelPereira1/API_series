@@ -1,4 +1,4 @@
-import 'package:api_series/pages/show_info.dart';
+import 'package:api_series/pages/show_details_page.dart';
 import 'package:api_series/request/show_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -115,15 +115,8 @@ class _ShowsListState extends State<ShowsList> {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: ((context) => ShowInfo(
+                                                builder: ((context) => ShowDetailsPage(
                                                       id: show.id,
-                                                      name: show.name,
-                                                      country: show.country,
-                                                      network: show.network,
-                                                      startDate: show.startDate,
-                                                      status: show.status,
-                                                      imageThumbnailPath: show
-                                                          .imageThumbnailPath,
                                                     )),
                                               ),
                                             );
@@ -199,15 +192,15 @@ class _ShowsListState extends State<ShowsList> {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: ((context) => ShowInfo(
+                                                builder: ((context) => ShowDetailsPage(
                                                       id: show.id,
-                                                      name: show.name,
-                                                      country: show.country,
-                                                      network: show.network,
-                                                      startDate: show.startDate,
-                                                      status: show.status,
-                                                      imageThumbnailPath: show
-                                                          .imageThumbnailPath,
+                                                      // name: show.name,
+                                                      // country: show.country,
+                                                      // network: show.network,
+                                                      // startDate: show.startDate,
+                                                      // status: show.status,
+                                                      // imageThumbnailPath: show
+                                                      //     .imageThumbnailPath,
                                                     )),
                                               ),
                                             );
@@ -283,15 +276,15 @@ class _ShowsListState extends State<ShowsList> {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: ((context) => ShowInfo(
+                                                builder: ((context) => ShowDetailsPage(
                                                       id: show.id,
-                                                      name: show.name,
-                                                      country: show.country,
-                                                      network: show.network,
-                                                      startDate: show.startDate,
-                                                      status: show.status,
-                                                      imageThumbnailPath: show
-                                                          .imageThumbnailPath,
+                                                      // name: show.name,
+                                                      // country: show.country,
+                                                      // network: show.network,
+                                                      // startDate: show.startDate,
+                                                      // status: show.status,
+                                                      // imageThumbnailPath: show
+                                                      //     .imageThumbnailPath,
                                                     )),
                                               ),
                                             );
