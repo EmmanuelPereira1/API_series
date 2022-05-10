@@ -194,13 +194,6 @@ class _ShowsListState extends State<ShowsList> {
                                               MaterialPageRoute(
                                                 builder: ((context) => ShowDetailsPage(
                                                       id: show.id,
-                                                      // name: show.name,
-                                                      // country: show.country,
-                                                      // network: show.network,
-                                                      // startDate: show.startDate,
-                                                      // status: show.status,
-                                                      // imageThumbnailPath: show
-                                                      //     .imageThumbnailPath,
                                                     )),
                                               ),
                                             );
@@ -278,13 +271,6 @@ class _ShowsListState extends State<ShowsList> {
                                               MaterialPageRoute(
                                                 builder: ((context) => ShowDetailsPage(
                                                       id: show.id,
-                                                      // name: show.name,
-                                                      // country: show.country,
-                                                      // network: show.network,
-                                                      // startDate: show.startDate,
-                                                      // status: show.status,
-                                                      // imageThumbnailPath: show
-                                                      //     .imageThumbnailPath,
                                                     )),
                                               ),
                                             );
