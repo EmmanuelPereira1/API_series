@@ -21,6 +21,7 @@ class _ShowMenssagesState extends State<ShowMenssages> {
         }
         return ListView.builder(
           reverse: true,
+          itemCount: snapshot.data!.docs.reversed.length,
           shrinkWrap: true,
           primary: true,
           physics: const ScrollPhysics(),
