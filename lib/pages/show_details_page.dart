@@ -1,9 +1,11 @@
 import 'package:api_series/request/fetch_show_details.dart';
-import 'package:api_series/widgets/custom_appbar.dart';
+import 'package:api_series/widgets/search_appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../widgets/custom_appbar.dart';
 
 class ShowDetailsPage extends StatefulWidget {
   final int id;

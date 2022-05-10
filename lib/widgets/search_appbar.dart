@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CustomAppbar extends StatelessWidget with PreferredSizeWidget {
-  CustomAppbar({Key? key}) : super(key: key);
-
+class SearchAppbar extends StatelessWidget with PreferredSizeWidget {
+  SearchAppbar({Key? key, this.searchDelegate}) : super(key: key);
+  SearchDelegate? searchDelegate;
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
+    return AppBar(
         toolbarHeight: 70,
         elevation: 0,
-        floating: true,
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Container(
@@ -20,7 +19,16 @@ class CustomAppbar extends StatelessWidget with PreferredSizeWidget {
                 fit: BoxFit.cover),
           ),
         ),
-);
+        actions: [
+          IconButton(
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: searchDelegate!,
+                );
+              },
+              icon: const Icon(Icons.search))
+        ]);
   }
 
   @override
