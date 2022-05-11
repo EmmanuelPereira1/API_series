@@ -1,10 +1,10 @@
 import 'package:api_series/config/theme.dart';
-import 'package:api_series/login/google_sign_in.dart';
-import 'package:api_series/login/login_google.dart';
-import 'package:api_series/login/google_login.dart';
+import 'package:api_series/login/google_sign_in_provider.dart';
+import 'package:api_series/login/login_body.dart';
+import 'package:api_series/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'login/login_page.dart';
+import 'login/login_api.dart';
 import 'pages/home_page.dart';
 
 
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           theme: theme(),
           debugShowCheckedModeBanner: false,
 
-          home: const HomePage(),
+          home: const LoginPage(),
 
         ),
   );

@@ -77,9 +77,10 @@
 //   }
 // }
 import 'package:api_series/config/gradientbackground.dart';
-import 'package:api_series/login/google_sign_in.dart';
 import 'package:api_series/request/fetch_search.dart';
 import 'package:api_series/widgets/show_search_delegate.dart';
+import 'package:api_series/login/google_sign_in_provider.dart';
+import 'package:api_series/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
