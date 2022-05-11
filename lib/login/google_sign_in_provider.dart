@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
+  
 
   GoogleSignInAccount? _user;
 
@@ -29,20 +30,19 @@ class GoogleSignInProvider extends ChangeNotifier {
 
   Future logoutGoogle() async {
     await googleSignIn.disconnect();
-    FirebaseAuth.instance.signOut();
+    await FirebaseAuth.instance.signOut();
   }
 
-  Future saveCredentialsGoogle() async {
-    final user = FirebaseAuth.instance.currentUser!;
+Future saveCredentialsGoogle() async {
+    final user =  FirebaseAuth.instance.currentUser!;
     final firestore = FirebaseFirestore.instance;
     var currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser?.uid != null) {
-      await firestore.collection("users").doc().set({
+    if (currentUser != null) {
+      await firestore.collection("users").doc(user.uid).set({
         "first_name": user.displayName,
         "email": user.email,
       });
     }
   }
-
   
 }

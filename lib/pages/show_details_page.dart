@@ -42,6 +42,8 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
   CollectionReference userRef =
       FirebaseFirestore.instance.collection('reviews');
   final TextEditingController _reviewController = TextEditingController();
+
+
   @override
   void initState() {
     super.initState();

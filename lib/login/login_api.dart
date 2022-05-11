@@ -1,10 +1,14 @@
 import 'package:api_series/config/gradientbackground.dart';
+import 'package:api_series/login/google_sign_in_provider.dart';
+import 'package:api_series/login/login_page.dart';
 import 'package:api_series/login/register/register.dart';
 import 'package:api_series/pages/home_page.dart';
 import 'package:api_series/request/get_api.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginApi extends StatefulWidget {
   const LoginApi({Key? key}) : super(key: key);
@@ -17,6 +21,8 @@ class _LoginApiState extends State<LoginApi> {
   final _messangerKey = GlobalKey<ScaffoldMessengerState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  var first_nameController = TextEditingController();
+  var last_nameController = TextEditingController();
   bool isLogin = false;
 
   @override
@@ -87,6 +93,9 @@ class _LoginApiState extends State<LoginApi> {
                       ),
                       onPressed: () async {
                         await login();
+                        // final provider = 
+                        //   Provider.of<GoogleSignInProvider>(context, listen: false);
+                        // await provider.saveCredentialsGoogle();
                         if (isLogin == true) {
                           Navigator.push(
                               context,
@@ -137,7 +146,9 @@ class _LoginApiState extends State<LoginApi> {
   }
 
   Future<bool> login() async {
-    if (passwordController.text.isNotEmpty && emailController.text.isNotEmpty) {
+      
+    if (passwordController.text.isNotEmpty && 
+    emailController.text.isNotEmpty) {
       var dio = Dio();
       var url = "https://academy-auth.herokuapp.com/login";
       var response = await dio.post(url,
@@ -146,7 +157,6 @@ class _LoginApiState extends State<LoginApi> {
             'password': passwordController.text
           }));
       if (response.statusCode == 201) {
-        // FirebaseAuth.instance.currentUser!.isAnonymous;
         return isLogin = true;
       } else {
         return isLogin = false;
@@ -160,6 +170,8 @@ class _LoginApiState extends State<LoginApi> {
       return false;
     }
   }
+
+  
 
   
 }

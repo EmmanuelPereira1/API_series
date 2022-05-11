@@ -2,6 +2,8 @@ import 'package:api_series/config/gradientbackground.dart';
 import 'package:api_series/login/google_sign_in_provider.dart';
 import 'package:api_series/login/login_api.dart';
 import 'package:api_series/login/register/register.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -54,10 +56,10 @@ class _LoginBodyState extends State<LoginBody> {
                 onPressed: () async {
                     final provider = 
                   Provider.of<GoogleSignInProvider>(context, listen: false);
-                  provider.googleLogin();
-                    final save =
-                  Provider.of<GoogleSignInProvider>(context, listen: false); 
-                  save.saveCredentialsGoogle();
+                  await provider.googleLogin();
+                  final save =
+                   Provider.of<GoogleSignInProvider>(context, listen: false); 
+                   await save.saveCredentialsGoogle();
                 },
                 icon: const FaIcon(FontAwesomeIcons.google, color: Colors.white,),
                 label: const Text('Sign Up with Google')
@@ -80,4 +82,5 @@ class _LoginBodyState extends State<LoginBody> {
     ),
   );
 }
+
 }

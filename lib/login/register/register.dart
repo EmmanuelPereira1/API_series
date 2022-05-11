@@ -207,7 +207,8 @@ class _RegisterAppState extends State<RegisterApp> {
   }
 
   Future signUp() async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+
+    final user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.toString(),
         password: passwordController.text.toString());
   }
