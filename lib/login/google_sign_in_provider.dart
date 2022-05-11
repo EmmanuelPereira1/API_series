@@ -33,17 +33,16 @@ class GoogleSignInProvider extends ChangeNotifier {
   }
 
   Future saveCredentialsGoogle() async {
-      final user = FirebaseAuth.instance.currentUser!;
-      final firestore = FirebaseFirestore.instance;
-      var currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser?.uid != null) {
-        await firestore.collection("users").doc().set
-        ({
-          "first_name": user.displayName,
-          "email": user.email,
-        });
-      }
+    final user = FirebaseAuth.instance.currentUser!;
+    final firestore = FirebaseFirestore.instance;
+    var currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser?.uid != null) {
+      await firestore.collection("users").doc().set({
+        "first_name": user.displayName,
+        "email": user.email,
+      });
     }
+  }
 
-    
+  
 }

@@ -5,9 +5,7 @@ import 'package:api_series/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'dart:math';
 import '../request/show_list.dart';
 import '../widgets/custom_appbar.dart';
 
@@ -22,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   double value = 0;
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
+    //final user = FirebaseAuth.instance.currentUser!;
 
     return Container(
         decoration: GradientColor.gradient,
@@ -32,8 +30,11 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                     decoration: GradientColor.gradient,
                     child: ListView(children: <Widget>[
-                      DrawerHeader(child: Image.asset('lib/images/showanalytic_logo.png',
-                      width: 50,)),
+                      DrawerHeader(
+                          child: Image.asset(
+                        'lib/images/showanalytic_logo.png',
+                        width: 50,
+                      )),
                       ListTile(
                         leading: const Icon(Icons.login, color: Colors.white),
                         title: const Text(
@@ -43,16 +44,24 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         onTap: () async {
-                           final provider = Provider.of<GoogleSignInProvider>(
-                              context,
-                              listen: false);
-                          await provider.logoutGoogle();
-                          if (FirebaseAuth.instance.currentUser!.isAnonymous) {
+                          final currentUserNull =
+                              FirebaseAuth.instance.currentUser == null;
+                          if (currentUserNull) {
                             Navigator.of(context).pushReplacement(
-                             MaterialPageRoute(builder: (context) => const LoginPage()), 
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()),
                             );
+                          } else {
+                            final provider = Provider.of<GoogleSignInProvider>(
+                                context,
+                                listen: false);
+                            await provider.logoutGoogle();
+                             Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()),
+                          );
                           }
-                          
+                         
                         },
                       ),
                     ]))),
