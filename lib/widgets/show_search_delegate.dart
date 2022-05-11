@@ -1,15 +1,31 @@
+import 'package:api_series/config/theme.dart';
 import 'package:api_series/models/search_show_model.dart';
+import 'package:api_series/pages/home_page.dart';
+import 'package:api_series/request/fetch_search.dart';
+import 'package:api_series/request/show_list.dart';
 import 'package:api_series/widgets/search_result_card.dart';
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import '../config/gradientbackground.dart';
+import '../pages/show_details_page.dart';
 
 class ShowSearchDelegate extends SearchDelegate {
-  
-  final List<SearchShowModel> showList;
+  FetchSearch showsList = FetchSearch();
 
-  ShowSearchDelegate({required this.showList});
-  
+  ShowSearchDelegate({required this.showsList});
+
+  // @override
+  // ThemeData appBarTheme(BuildContext context) {
+  //   return ThemeData(
+  //     appBarTheme: const AppBarTheme(
+  //       color: Color(0XFF026873),
+  //     ),
+  //     textTheme: const TextTheme(
+  //         headline6: TextStyle(
+  //             color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+  //   );
+  // }
+
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
       onPressed: () => close(context, null),
@@ -31,44 +47,56 @@ class ShowSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    List<SearchShowModel> suggestions = showList.where((searchResult) {
-      final result = searchResult.name!.toLowerCase();
-      final input = query.toLowerCase();
-      return result.contains(input);
-    }).toList();
-    return Container(
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView.builder(
-          itemCount: suggestions.length,
-          itemBuilder: (context, index) {
-            final suggestion = suggestions[index];
-            return SearchResultCard(id: suggestion.id!, imageThumbnailPath: suggestion.imageThumbnailPath!, name: suggestion.name!);
-          },
-        ),
-      ),
-    );
+    return FutureBuilder<List<TvShows>>(
+        future: showsList.fetchSearch(query),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          List<TvShows>? data = snapshot.data;
+          return Container(
+            decoration: GradientColor.gradient,
+            child: ListView.builder(
+                itemCount: data?.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Ink(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: ((context) => ShowDetailsPage(
+                                      id: data![index].id!,
+                                    )),
+                              ),
+                            );
+                          },
+                          child: SearchResultCard(
+                              id: data![index].id!,
+                              name: data[index].name!,
+                              imageThumbnailPath:
+                                  data[index].imageThumbnailPath!),
+                        ),
+                      ),
+                      const SizedBox(height: 2)
+                    ],
+                  );
+                }),
+          );
+        });
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<SearchShowModel> suggestions = showList.where((searchResult) {
-      final result = searchResult.name!.toLowerCase();
-      final input = query.toLowerCase();
-      return result.contains(input);
-    }).toList();
     return Container(
       decoration: GradientColor.gradient,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView.builder(
-          itemCount: suggestions.length,
-          itemBuilder: (context, index) {
-            final suggestion = suggestions[index];
-            return SearchResultCard(id: suggestion.id!, imageThumbnailPath: suggestion.imageThumbnailPath!, name: suggestion.name!);
-          },
-        ),
+      child: const Scaffold(
+        backgroundColor: Colors.transparent,
+        body: ShowsList()
       ),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:api_series/request/fetch_show_details.dart';
-import 'package:api_series/widgets/search_appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -11,7 +10,7 @@ class ShowDetailsPage extends StatefulWidget {
   final int id;
   final String? name;
   final String? description;
-  final String? image_thumbnail_path;
+  final String? imageThumbnailPath;
   final String? country;
   final String? status;
   final String? network;
@@ -22,7 +21,7 @@ class ShowDetailsPage extends StatefulWidget {
     required this.id,
     this.name,
     this.description,
-    this.image_thumbnail_path,
+    this.imageThumbnailPath,
     this.country,
     this.status,
     this.network,
@@ -104,7 +103,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                   ),
                                   Container(
                                     margin: const EdgeInsets.fromLTRB(
-                                        15, 335, 30, 2),
+                                        15, 310, 30, 2),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -117,7 +116,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                                     fontWeight:
                                                         FontWeight.bold)),
                                         const SizedBox(height: 5),
-                                        Row(
+                                        Wrap(
                                           children: [
                                             Text(snapshot.data!.status,
                                                 style: Theme.of(context)
@@ -127,8 +126,13 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                                         fontWeight:
                                                             FontWeight.normal)),
                                             const SizedBox(width: 6),
-                                            const Icon(Icons.circle,
-                                                color: Colors.white, size: 6),
+                                            Column(
+                                              children: const [
+                                                SizedBox(height: 10),
+                                                Icon(Icons.circle,
+                                                    color: Colors.white, size: 6),
+                                              ],
+                                            ),
                                             const SizedBox(width: 6),
                                             Text(snapshot.data!.country,
                                                 style: Theme.of(context)
@@ -138,8 +142,13 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                                         fontWeight:
                                                             FontWeight.normal)),
                                             const SizedBox(width: 6),
-                                            const Icon(Icons.circle,
-                                                color: Colors.white, size: 6),
+                                            Column(
+                                              children: const [
+                                                SizedBox(height: 10),
+                                                Icon(Icons.circle,
+                                                    color: Colors.white, size: 6),
+                                              ],
+                                            ),
                                             const SizedBox(width: 6),
                                             Text(snapshot.data!.network,
                                                 style: Theme.of(context)
@@ -263,7 +272,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                         padding: const EdgeInsets.only(left: 20),
                                         child: Column(
                                           children: [
-                                            Row(
+                                            Wrap(
                                               children: [
                                                 Text("Rate ",
                                                     style: Theme.of(context)
@@ -289,7 +298,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                               children: [
                                                 Container(
                                                   color: Colors.grey[350],
-                                                  width: 205,
+                                                  width: 300,
                                                   height: 1,
                                                 ),
                                               ],

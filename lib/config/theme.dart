@@ -35,7 +35,7 @@ ThemeData theme() {
         fontFamily: GoogleFonts.openSans().fontFamily,
       ),
       headline6: TextStyle(
-        color: Colors.white,
+        color: Colors.black,
         fontWeight: FontWeight.normal,
         fontSize: 14,
         fontFamily: GoogleFonts.openSans().fontFamily,

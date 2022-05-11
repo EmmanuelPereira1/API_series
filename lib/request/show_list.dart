@@ -103,7 +103,6 @@ class _ShowsListState extends State<ShowsList> {
                             controller: _scrollController,
                             itemBuilder: ((context, index) {
                               final show = showRepo.shows[index];
-                              
                               if (show.status == "Running") {
                                 return Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
