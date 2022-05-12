@@ -1,9 +1,10 @@
 import 'package:api_series/config/gradientbackground.dart';
-import 'package:api_series/pages/home_page.dart';
+import 'package:api_series/pages/main_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../pages/home_page.dart';
 import '../../request/get_api.dart';
 
 class RegisterApp extends StatefulWidget {

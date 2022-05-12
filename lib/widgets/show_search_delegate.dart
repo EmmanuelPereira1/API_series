@@ -1,6 +1,6 @@
 import 'package:api_series/config/theme.dart';
 import 'package:api_series/models/search_show_model.dart';
-import 'package:api_series/pages/home_page.dart';
+import 'package:api_series/pages/main_page.dart';
 import 'package:api_series/request/fetch_search.dart';
 import 'package:api_series/request/show_list.dart';
 import 'package:api_series/widgets/search_result_card.dart';
