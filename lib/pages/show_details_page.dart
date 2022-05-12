@@ -663,7 +663,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                 children: [
                                   RatingBar.builder(
                                     initialRating: 0.5,
-                                    minRating: 0.5,
+                                    minRating: 0.0,
                                     direction: Axis.horizontal,
                                     allowHalfRating: true,
                                     itemCount: 5,
@@ -706,6 +706,19 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                                     .collection("reviews")
                                                     .doc();
                                                 await reviewDoc.set({
+                                                  "id_show": widget.id,
+                                                  "review_text":
+                                                      _reviewController.text
+                                                          .trim(),
+                                                  "first_name": first_name,
+                                                  "rating": ratingReview,
+                                                });
+                                                final myReviewDoc = storeMessage
+                                                    .collection("users")
+                                                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                                                    .collection('my_reviews')
+                                                    .doc();
+                                                await myReviewDoc.set({
                                                   "id_show": widget.id,
                                                   "review_text":
                                                       _reviewController.text

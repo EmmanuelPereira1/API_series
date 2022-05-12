@@ -111,7 +111,7 @@ class _MainPageState extends State<MainPage> {
       onPageChanged: (index) {
         pageChanged(index);
       },
-      children: <Widget>[
+      children:const <Widget>[
         HomePage(),
         FavoritePage(),
         ProfilePage(),
@@ -168,7 +168,7 @@ class _MainPageState extends State<MainPage> {
                           color: Colors.white,
                         ),
                       ),
-                      onTap: () async {
+                      onTap: () async {                
                         final currentUserAuthProvider = FirebaseAuth
                             .instance.currentUser!.providerData[0].providerId;
                         if (currentUserAuthProvider == "password") {
@@ -193,6 +193,7 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
         bottomNavigationBar: SnakeNavigationBar.color(
+              
               currentIndex: bottomSelectedIndex,
               onTap: (index) {
                 bottomTapped(index);
@@ -203,7 +204,7 @@ class _MainPageState extends State<MainPage> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               selectedItemColor: Colors.white,
-              unselectedItemColor: Colors.black,
+              unselectedItemColor: Colors.white,
               items: const [
                 BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
                 BottomNavigationBarItem(

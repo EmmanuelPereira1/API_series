@@ -138,7 +138,7 @@ class _RegisterAppState extends State<RegisterApp> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: ((context) => const HomePage())));
+                                    builder: ((context) => const MainPage())));
                           } else {
                             _messangerKey.currentState?.showSnackBar(
                                 const SnackBar(content: Text('puts campeão')));
@@ -200,17 +200,15 @@ class _RegisterAppState extends State<RegisterApp> {
           "email": emailController.text,
           "password": passwordController.text,
         });
-        // await firestore.collection("users").doc(currentUser.uid).update({
-        //   "tag": tagText,
-        // });
       }
     }
   }
 
   Future signUp() async {
 
-    final user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.toString(),
         password: passwordController.text.toString());
   }
+  
 }
