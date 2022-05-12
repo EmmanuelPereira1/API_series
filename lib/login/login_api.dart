@@ -26,6 +26,7 @@ class _LoginApiState extends State<LoginApi> {
   var first_nameController = TextEditingController();
   var last_nameController = TextEditingController();
   bool isLogin = false;
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -56,6 +57,7 @@ class _LoginApiState extends State<LoginApi> {
                       Image.asset("lib/images/showanalytic_logo.png"),
                       const SizedBox(height: 100,),
                       TextFormField(
+                        validator: validateEmail,
                         controller: emailController,
                         decoration: const InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -73,7 +75,7 @@ class _LoginApiState extends State<LoginApi> {
                         height: 15,
                       ),
                       TextFormField(
-                       
+                       validator: validatePassword,
                         controller: passwordController,
                         obscureText: true,
                         decoration: const InputDecoration(
@@ -97,7 +99,8 @@ class _LoginApiState extends State<LoginApi> {
                               const Color(0XFF026873)),
                         ),
                         onPressed: () async {
-                          await login();
+                          if (_key.currentState!.validate()){
+                            await login();
                           await authLogin();
                           if (isLogin == true) {
                             Navigator.push(
@@ -107,6 +110,10 @@ class _LoginApiState extends State<LoginApi> {
                           } else {
                             _messangerKey.currentState?.showSnackBar(
                                 const SnackBar(content: Text('puts campeão')));
+                          }
+                          setState(() {
+                            //arrumar a partir daqui
+                          });
                           }
                         },
                         icon: const Icon(
@@ -180,6 +187,23 @@ class _LoginApiState extends State<LoginApi> {
       return false;
     }
   }
+
+  String? validateEmail(String? formEmail){
+    if (formEmail == null || formEmail.isEmpty)
+
+    return  'E-mail address is required.';
+
+    return null;
+  }
+
+  String? validatePassword(String? formEmail){
+    if (formEmail == null || formEmail.isEmpty)
+
+    return  'Password address is required.';
+
+    return null;
+  }
+
 
   
 
