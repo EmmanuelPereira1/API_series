@@ -1,5 +1,6 @@
 import 'package:api_series/login/login_body.dart';
 import 'package:api_series/pages/home_page.dart';
+import 'package:api_series/pages/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -9,14 +10,14 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   return Scaffold(
-        body: StreamBuilder(
+        body: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasData){
+          } else if (snapshot.hasData ){
             // saveCredentialsGoogle();
-            return const HomePage();
+            return const MainPage();
           } else if (snapshot.hasError) {
             return const Center(child: Text("Something went wrong"));
           } else {

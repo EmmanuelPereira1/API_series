@@ -1,6 +1,8 @@
 import 'package:api_series/config/gradientbackground.dart';
+import 'package:api_series/login/login_page.dart';
 import 'package:api_series/request/fetch_search.dart';
 import 'package:api_series/widgets/show_search_delegate.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:provider/provider.dart';
@@ -27,32 +29,57 @@ class _HomePageState extends State<HomePage> {
         appBar: SearchAppbar(
             searchDelegate: ShowSearchDelegate(showsList: showsList)),
         body: const ShowsList(),
-        // drawer: Drawer(
-        //     backgroundColor: Colors.transparent,
-        //     child: Container(
-        //         decoration: GradientColor.gradient,
-        //         child: ListView(children: <Widget>[
-        //           DrawerHeader(
-        //               child: Image.asset(
-        //             'lib/images/showanalytic_logo.png',
-        //             width: 50,
-        //           )),
-        //           ListTile(
-        //             leading: const Icon(Icons.login, color: Colors.white),
-        //             title: const Text(
-        //               "LOGOUT",
-        //               style: TextStyle(
-        //                 color: Colors.white,
-        //               ),
-        //             ),
-        //             onTap: () {
-        //               final provider = Provider.of<GoogleSignInProvider>(
-        //                   context,
-        //                   listen: false);
-        //               provider.logoutGoogle();
-        //             },
-        //           ),
-        //         ]))),
+        drawer: Drawer(
+            backgroundColor: Colors.transparent,
+            child: Container(
+                decoration: GradientColor.gradient,
+                child: ListView(children: <Widget>[
+                  DrawerHeader(
+                      child: Image.asset(
+                    'lib/images/showanalytic_logo.png',
+                    width: 50,
+                  )),
+                  ListTile(
+                    leading: const Icon(Icons.login, color: Colors.white),
+                    title: const Text(
+                      "LOGOUT",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    onTap: () {
+                      FirebaseAuth.instance.signOut();
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage() 
+                        )
+                      );
+                      },
+                    // onTap: () async {
+                    //     final currentUserAuthProvider = FirebaseAuth
+                    //         .instance.currentUser!.providerData[0].providerId;
+                    //     if (currentUserAuthProvider == "password") {
+                    //        final provider = Provider.of<GoogleSignInProvider>(
+                    //           context,
+                    //           listen: false);
+                    //       await provider.logoutGoogle();
+                    //       Navigator.of(context).pushReplacement(
+                    //         MaterialPageRoute(
+                    //             builder: (context) => const LoginPage()),
+                    //       );
+                    //     } else {
+                    //       final provider = Provider.of<GoogleSignInProvider>(
+                    //           context,
+                    //           listen: false);
+                    //       await provider.logoutGoogle();
+                    //       Navigator.of(context).pushReplacement(
+                    //         MaterialPageRoute(
+                    //             builder: (context) => const LoginPage()),
+                    //       );
+                    //     }
+                    //   },
+                  ),
+                ]))),
         // bottomNavigationBar: SnakeNavigationBar.color(
         //   backgroundColor:
         //       const Color.fromARGB(255, 0, 70, 78).withOpacity(0.8),

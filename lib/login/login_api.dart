@@ -95,6 +95,7 @@ class _LoginApiState extends State<LoginApi> {
                       ),
                       onPressed: () async {
                         await login();
+                        await authLogin();
                         // final provider = 
                         //   Provider.of<GoogleSignInProvider>(context, listen: false);
                         // await provider.saveCredentialsGoogle();
@@ -102,7 +103,7 @@ class _LoginApiState extends State<LoginApi> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: ((context) => const HomePage())));
+                                  builder: ((context) => const MainPage())));
                         } else {
                           _messangerKey.currentState?.showSnackBar(
                               const SnackBar(content: Text('puts campeão')));
@@ -145,6 +146,12 @@ class _LoginApiState extends State<LoginApi> {
         ),
       ),
     );
+  }
+  Future authLogin() async {
+
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.toString(),
+        password: passwordController.text.toString());
   }
 
   Future<bool> login() async {
