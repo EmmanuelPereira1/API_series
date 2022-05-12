@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class FavoritePage extends StatefulWidget {
-    final int id;
 
   const FavoritePage({Key? key,
-  required this.id
   }) : super(key: key);
 
   @override
@@ -43,17 +41,17 @@ class _FavoritePageState extends State<FavoritePage> {
         return Container(
           decoration: GradientColor.gradient,
           child: ListView.builder(
-            reverse: true,
-            itemCount: snapshot.data!.docs.reversed.length,
+            // reverse: true,
+            itemCount: snapshot.data!.docs.length,
             shrinkWrap: true,
             primary: true,
             physics: const ScrollPhysics(),
             itemBuilder: (context, i) {
-              QueryDocumentSnapshot document = snapshot.data!.docs[1];
-              if (widget.id == document['id_show']) {
+              QueryDocumentSnapshot document = snapshot.data!.docs[i];
                 return Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(height: 20),
                       Card(
                         color: Colors.white,
                         elevation: 4,
@@ -108,10 +106,9 @@ class _FavoritePageState extends State<FavoritePage> {
                       ),
                     ],
                   );
-              } else {
-                return const Center();
-              }
-            },
+              } 
+              
+            
           ),
         );
       },

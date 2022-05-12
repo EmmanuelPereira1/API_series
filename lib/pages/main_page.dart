@@ -76,6 +76,7 @@
 // //     );
 // //   }
 // // }
+import 'package:api_series/pages/favorite_page.dart';
 import 'package:api_series/pages/home_page.dart';
 import 'package:api_series/pages/profile_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -112,6 +113,7 @@ class _MainPageState extends State<MainPage> {
       },
       children: <Widget>[
         HomePage(),
+        FavoritePage(),
         ProfilePage(),
       ],
     );
