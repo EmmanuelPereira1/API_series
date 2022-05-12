@@ -146,10 +146,9 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        extendBody: true,
         body: buildPageView(),
         drawer: Drawer(
-              backgroundColor: Colors.transparent,
               child: Container(
                 decoration: GradientColor.gradient,
                 child: ListView(

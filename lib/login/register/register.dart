@@ -38,121 +38,127 @@ class _RegisterAppState extends State<RegisterApp> {
     return MaterialApp(
       scaffoldMessengerKey: _messangerKey,
       home: Scaffold(
-        body: Container(
-          decoration: GradientColor.gradient,
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SafeArea(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "lib/images/showanalytic_logo.png",
-                      width: 270,
-                    ),
-                    const SizedBox(height: 70),
-                    TextFormField(
-                      controller: firstNameController,
-                      decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelText: "FIRST NAME",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                        ),
-                        suffixIcon: Icon(
-                          Icons.person,
-                          color: Color(0XFF026873),
+        body: SingleChildScrollView(
+          child: Container(
+            decoration: GradientColor.gradient,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SafeArea(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "lib/images/showanalytic_logo.png",
+                        width: 270,
+                      ),
+                      const SizedBox(height: 70),
+                      TextFormField(
+                        controller: firstNameController,
+                        decoration: const InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: "FIRST NAME",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                          ),
+                          suffixIcon: Icon(
+                            Icons.person,
+                            color: Color(0XFF026873),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: lastNameController,
-                      decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelText: "LAST NAME",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                        ),
-                        suffixIcon: Icon(
-                          Icons.person,
-                          color: Color(0XFF026873),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        controller: lastNameController,
+                        decoration: const InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: "LAST NAME",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                          ),
+                          suffixIcon: Icon(
+                            Icons.person,
+                            color: Color(0XFF026873),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelText: "EMAIL",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                        ),
-                        suffixIcon: Icon(
-                          Icons.email,
-                          color: Color(0XFF026873),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        controller: emailController,
+                        decoration: const InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: "EMAIL",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                          ),
+                          suffixIcon: Icon(
+                            Icons.email,
+                            color: Color(0XFF026873),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelText: "PASSWORD",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                        ),
-                        suffixIcon: Icon(
-                          Icons.key,
-                          color: Color(0XFF026873),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: "PASSWORD",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                          ),
+                          suffixIcon: Icon(
+                            Icons.key,
+                            color: Color(0XFF026873),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 45,
-                    ),
-                    OutlinedButton.icon(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0XFF026873)),
-                        ),
-                        onPressed: () async {
-                          await register();
-                          await signUp();
-                          await saveCredentials();
-                          if (isRegister == true) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) => const MainPage())));
-                          } else {
-                            _messangerKey.currentState?.showSnackBar(
-                                const SnackBar(content: Text('puts campeão')));
-                          }
-                        },
-                        icon: const Icon(
-                          Icons.app_registration_outlined,
-                          color: Colors.white,
-                        ),
-                        label: const Text(
-                          "REGISTER",
-                          style: TextStyle(color: Colors.white),
-                        ))
-                  ],
+                      const SizedBox(
+                        height: 45,
+                      ),
+                      OutlinedButton.icon(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color(0XFF026873)),
+                          ),
+                          onPressed: () async {
+                            await register();
+                            await signUp();
+                            await saveCredentials();
+                            if (isRegister == true) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) => const MainPage())));
+                            } else {
+                              _messangerKey.currentState?.showSnackBar(
+                                  const SnackBar(content: Text('puts campeão')));
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.app_registration_outlined,
+                            color: Colors.white,
+                          ),
+                          label: const Text(
+                            "REGISTER",
+                            style: TextStyle(color: Colors.white),
+                          ))
+                    ],
+                  ),
                 ),
               ),
             ),

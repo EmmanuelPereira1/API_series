@@ -43,102 +43,103 @@ class _LoginApiState extends State<LoginApi> {
     return MaterialApp(
       
       home: Scaffold(
-        body: Container(
-          decoration: GradientColor.gradient,
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SafeArea(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset("lib/images/showanalytic_logo.png"),
-                    const SizedBox(height: 100,),
-                    TextFormField(
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelText: "EMAIL",
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25))),
-                        suffixIcon: Icon(Icons.email,
-                        color: Color(0XFF026873)),
+        body: SingleChildScrollView(
+          child: Container(
+            decoration: GradientColor.gradient,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SafeArea(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset("lib/images/showanalytic_logo.png"),
+                      const SizedBox(height: 100,),
+                      TextFormField(
+                        controller: emailController,
+                        decoration: const InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: "EMAIL",
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25))),
+                          suffixIcon: Icon(Icons.email,
+                          color: Color(0XFF026873)),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                     
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelText: "PASSWORD",
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25))),
-                        suffixIcon: Icon(Icons.key,
-                        color: Color(0XFF026873)),
+                      const SizedBox(
+                        height: 15,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 45,
-                    ),
-                    OutlinedButton.icon(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color(0XFF026873)),
+                      TextFormField(
+                       
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: "PASSWORD",
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25))),
+                          suffixIcon: Icon(Icons.key,
+                          color: Color(0XFF026873)),
+                        ),
                       ),
-                      onPressed: () async {
-                        await login();
-                        await authLogin();
-                        // final provider = 
-                        //   Provider.of<GoogleSignInProvider>(context, listen: false);
-                        // await provider.saveCredentialsGoogle();
-                        if (isLogin == true) {
+                      const SizedBox(
+                        height: 45,
+                      ),
+                      OutlinedButton.icon(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0XFF026873)),
+                        ),
+                        onPressed: () async {
+                          await login();
+                          await authLogin();
+                          if (isLogin == true) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => const MainPage())));
+                          } else {
+                            _messangerKey.currentState?.showSnackBar(
+                                const SnackBar(content: Text('puts campeão')));
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.login,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          "LOGIN",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      OutlinedButton.icon(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0XFF026873)),
+                        ),
+                        onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: ((context) => const MainPage())));
-                        } else {
-                          _messangerKey.currentState?.showSnackBar(
-                              const SnackBar(content: Text('puts campeão')));
-                        }
-                      },
-                      icon: const Icon(
-                        Icons.login,
-                        color: Colors.white,
-                      ),
-                      label: const Text(
-                        "LOGIN",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    OutlinedButton.icon(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color(0XFF026873)),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => const RegisterApp())));
-                      },
-                      icon: const Icon(
-                        Icons.app_registration_outlined,
-                        color: Colors.white,
-                      ),
-                      label: const Text(
-                        "REGISTER",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )
-                  ],
+                                  builder: ((context) => const RegisterApp())));
+                        },
+                        icon: const Icon(
+                          Icons.app_registration_outlined,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          "REGISTER",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -719,6 +719,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                                     .collection('my_reviews')
                                                     .doc();
                                                 await myReviewDoc.set({
+                                                  'show_name': snapshot.data!.name, 
                                                   "id_show": widget.id,
                                                   "review_text":
                                                       _reviewController.text
