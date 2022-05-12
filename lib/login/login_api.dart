@@ -2,13 +2,15 @@ import 'package:api_series/config/gradientbackground.dart';
 import 'package:api_series/login/google_sign_in_provider.dart';
 import 'package:api_series/login/login_page.dart';
 import 'package:api_series/login/register/register.dart';
-import 'package:api_series/pages/home_page.dart';
+import 'package:api_series/pages/main_page.dart';
 import 'package:api_series/request/get_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../pages/home_page.dart';
 
 class LoginApi extends StatefulWidget {
   const LoginApi({Key? key}) : super(key: key);
