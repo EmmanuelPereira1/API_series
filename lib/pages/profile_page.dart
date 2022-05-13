@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,9 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     getFirstName();
     getEmail();
+    getPassword();
     countDocuments();
+    print(password);
   }
 
   @override
@@ -28,12 +31,14 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
+  var password;
   var newPassword;
   String? firstName;
   String? email;
   int? totalReviews;
   final TextEditingController _newPasswordController = TextEditingController();
   var currentUser = FirebaseAuth.instance.currentUser;
+  final user = FirebaseAuth.instance.currentUser!;
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -59,9 +64,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
+                      margin: const EdgeInsets.only(left: 10),
                         width: 340,
                         height: 340,
-                        margin: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.0),
                             color: const Color(0XFF026873)),
@@ -80,37 +85,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                     .headline3!
                                     .copyWith(color: Colors.grey[400])),
                             const SizedBox(height: 10),
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(
-                            //       horizontal: 50, vertical: 16),
-                            //   child: TextField(
-                            //     enabled: false,
-                            //     style: const TextStyle(
-                            //         color: Colors.black),
-                            //     controller: _newPasswordController,
-                            //     decoration: InputDecoration(
-                            //       filled: true,
-                            //       fillColor: Colors.grey[600],
-                            //       enabledBorder:
-                            //           const UnderlineInputBorder(
-                            //               borderSide: BorderSide(
-                            //                   color: Colors.white)),
-                            //       focusedBorder:
-                            //           const UnderlineInputBorder(
-                            //               borderSide: BorderSide(
-                            //                   color: Colors.white)),
-                            //       hintText: 'Change Password',
-                            //       hintStyle: Theme.of(context)
-                            //           .textTheme
-                            //           .headline5!
-                            //           .copyWith(color: Colors.black),
-                            //       suffixIcon: IconButton(
-                            //           onPressed: () {},
-                            //           icon: const Icon(Icons.send,
-                            //               color: Colors.amber)),
-                            //     ),
-                            //   ),
-                            // ),
                             Form(
                                 key: _formKey,
                                 child: Padding(
@@ -120,6 +94,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                     autofocus: false,
                                     obscureText: true,
                                     decoration: InputDecoration(
+                                        suffixIcon: IconButton(
+                                            onPressed: () async {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                setState(() {
+                                                  newPassword =
+                                                      _newPasswordController
+                                                          .text;
+                                                });
+                                                updatePasswordDio();
+                                                updatePassword();
+                                                _changePassword(newPassword);
+                                                showMyDialog();
+                                              }
+                                            },
+                                            icon: const Icon(Icons.edit), color: Colors.amber,),
                                         labelText: "New Password",
                                         hintText: "Enter New Password",
                                         labelStyle: Theme.of(context)
@@ -127,28 +117,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                             .headline5,
                                         border: const OutlineInputBorder(),
                                         errorStyle: const TextStyle(
-                                            color: Colors.black26,
+                                            color: Colors.amber,
                                             fontSize: 15.0)),
                                     controller: _newPasswordController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return "Please Enter Password";
+                                        return "Please enter password";
+                                      } else if (value.length < 6) {
+                                        return "Password must contain at least 6 characters";
+                                      } else if (_newPasswordController.text ==
+                                          password) {
+                                        return "Password is the same as before";
                                       }
                                       return null;
                                     },
                                   ),
                                 )),
-                            IconButton(
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    setState(() {
-                                      newPassword = _newPasswordController.text;
-                                    });
-                                    changePassword();
-                                    updatePassword();
-                                  }
-                                },
-                                icon: Icon(Icons.edit)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -231,6 +215,18 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  Future<void> getPassword() async {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    final DocumentReference document =
+        FirebaseFirestore.instance.collection("users").doc(currentUser!.uid);
+    await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
+      Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
+      setState(() {
+        password = data['password'];
+      });
+    });
+  }
+
   void countDocuments() async {
     QuerySnapshot _myDoc = await FirebaseFirestore.instance
         .collection("users")
@@ -241,19 +237,13 @@ class _ProfilePageState extends State<ProfilePage> {
     totalReviews = _myDocCount.length;
   }
 
-  changePassword() async {
-    try {
-      await currentUser!.updatePassword(newPassword);
-      await FirebaseAuth.instance.signOut();
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const LoginPage()));
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        backgroundColor: Colors.black26,
-        content: Text("Your password has been changed"),
-      ));
-    } catch (error) {
-      
-    }
+  void _changePassword(String newPassword) async {
+    final user = await FirebaseAuth.instance.currentUser!;
+    user.updatePassword(newPassword).then((_) {
+      print("Successfully changed password");
+    }).catchError((error) {
+      print("Password can't be changed" + error.toString());
+    });
   }
 
   updatePassword() async {
@@ -265,5 +255,96 @@ class _ProfilePageState extends State<ProfilePage> {
           .doc(user.uid)
           .update({"password": _newPasswordController.text});
     }
+  }
+
+  Future updatePasswordDio() async {
+    final user = FirebaseAuth.instance.currentUser!;
+    if (_newPasswordController.text.isNotEmpty) {
+      var dio = Dio();
+      var url = "https://academy-auth.herokuapp.com/update";
+      var response = await dio.patch(url,
+          options: Options(headers: {
+            'x-access-token':
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjI3MTU4OThlNGE5MDE1YzgxZDVlYTE1IiwiZW1haWwiOiJwZWRybzEzQHRlc3RlLmNvbSIsImlhdCI6MTY1MTYwMzgwOCwiZXhwIjoxNjU0MTk1ODA4fQ.Jjh6UyXmfNICuqxyNzFybRfZ4hLo4zKZZ8Mteqz-Sf8"
+          }),
+          data: ({
+            "email": user.email,
+            "new_password": _newPasswordController.text
+          }));
+      if (response.statusCode == 201) {
+        print("deu certo");
+        response.data;
+      } else {
+        print("puts campeão");
+      }
+    }
+  }
+
+  void showMyDialog() {
+    showDialog(
+        context: context,
+        builder: (context) => Center(
+                child: Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              child: Container(
+                color: const Color(0XFF026873),
+                height: 100,
+                width: 200,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 5, right: 5),
+                  child: Column(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Your password has been changed.",
+                            style: Theme.of(context).textTheme.headline5,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 5),
+                          Text("Please login again.",
+                              style: Theme.of(context).textTheme.headline5),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            width: 60,
+                            height: 30,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.transparent),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: TextButton(
+                                  onPressed: () {
+                                    FirebaseAuth.instance.signOut();
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginPage()),
+                                    );
+                                  },
+                                  child: Text("OK",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6!
+                                          .copyWith(color: Colors.white))),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )));
   }
 }
