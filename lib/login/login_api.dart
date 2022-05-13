@@ -26,12 +26,16 @@ class _LoginApiState extends State<LoginApi> {
   var first_nameController = TextEditingController();
   var last_nameController = TextEditingController();
   bool isLogin = false;
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final _key = GlobalKey<FormState>();
+  // var password;
+  // var email;
 
   @override
   void initState() {
     super.initState();
     request();
+    // getEmail();
+    // getPassword();
   }
 
   @override
@@ -44,6 +48,7 @@ class _LoginApiState extends State<LoginApi> {
     return MaterialApp(
       
       home: Scaffold(
+        
         body: SingleChildScrollView(
           child: Container(
             decoration: GradientColor.gradient,
@@ -51,101 +56,109 @@ class _LoginApiState extends State<LoginApi> {
               padding: const EdgeInsets.all(10.0),
               child: SafeArea(
                 child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset("lib/images/showanalytic_logo.png"),
-                      const SizedBox(height: 100,),
-                      TextFormField(
-                        validator: validateEmail,
-                        controller: emailController,
-                        decoration: const InputDecoration(
+                  child: Form(
+                    key: _key,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset("lib/images/showanalytic_logo.png"),
+                        const SizedBox(height: 100,),
+                        TextFormField(
+                          validator: (value) {
+                           if (value == null || value.isEmpty){
+                             return 'Enter an email.';
+                           }
+                           return null;
+                         },
+                          controller: emailController,
+                          decoration: const InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            fillColor: Colors.white,
+                            filled: true,
+                            labelText: "EMAIL",
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25))),
+                            suffixIcon: Icon(Icons.email,
+                            color: Color(0XFF026873)),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        TextFormField(
+                         validator: (value) {
+                           if (value == null || value.isEmpty){
+                             return 'Enter an password.';
+                           }  
+                           return null;
+                         },
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: const InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.never,
-                          fillColor: Colors.white,
-                          filled: true,
-                          labelText: "EMAIL",
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25))),
-                          suffixIcon: Icon(Icons.email,
-                          color: Color(0XFF026873)),
+                            fillColor: Colors.white,
+                            filled: true,
+                            labelText: "PASSWORD",
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25))),
+                            suffixIcon: Icon(Icons.key,
+                            color: Color(0XFF026873)),
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                       validator: validatePassword,
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                          fillColor: Colors.white,
-                          filled: true,
-                          labelText: "PASSWORD",
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25))),
-                          suffixIcon: Icon(Icons.key,
-                          color: Color(0XFF026873)),
+                        const SizedBox(
+                          height: 45,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 45,
-                      ),
-                      OutlinedButton.icon(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0XFF026873)),
-                        ),
-                        onPressed: () async {
-                          if (_key.currentState!.validate()){
+                        OutlinedButton.icon(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color(0XFF026873)),
+                          ),
+                          onPressed: () async {
+                            if (_key.currentState!.validate()){
                             await login();
-                          await authLogin();
-                          if (isLogin == true) {
+                            await authLogin();
+                            if (isLogin == true) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) => const MainPage())));
+                            } 
+                            setState(() {});
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.login,
+                            color: Colors.white,
+                          ),
+                          label: const Text(
+                            "LOGIN",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        OutlinedButton.icon(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color(0XFF026873)),
+                          ),
+                          onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: ((context) => const MainPage())));
-                          } else {
-                            _messangerKey.currentState?.showSnackBar(
-                                const SnackBar(content: Text('puts campeão')));
-                          }
-                          setState(() {
-                            //arrumar a partir daqui
-                          });
-                          }
-                        },
-                        icon: const Icon(
-                          Icons.login,
-                          color: Colors.white,
-                        ),
-                        label: const Text(
-                          "LOGIN",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      OutlinedButton.icon(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0XFF026873)),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) => const RegisterApp())));
-                        },
-                        icon: const Icon(
-                          Icons.app_registration_outlined,
-                          color: Colors.white,
-                        ),
-                        label: const Text(
-                          "REGISTER",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      )
-                    ],
+                                    builder: ((context) => const RegisterApp())));
+                          },
+                          icon: const Icon(
+                            Icons.app_registration_outlined,
+                            color: Colors.white,
+                          ),
+                          label: const Text(
+                            "REGISTER",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -187,26 +200,29 @@ class _LoginApiState extends State<LoginApi> {
       return false;
     }
   }
-
-  String? validateEmail(String? formEmail){
-    if (formEmail == null || formEmail.isEmpty)
-
-    return  'E-mail address is required.';
-
-    return null;
-  }
-
-  String? validatePassword(String? formEmail){
-    if (formEmail == null || formEmail.isEmpty)
-
-    return  'Password address is required.';
-
-    return null;
-  }
-
-
-  
-
-  
+  // Future<void> getPassword() async {
+  //   var currentUser = FirebaseAuth.instance.currentUser;
+  //   final DocumentReference document =
+  //       FirebaseFirestore.instance.collection("users").doc(currentUser!.uid);
+  //   await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
+  //     Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
+  //     setState(() {
+  //       password = data['password'];
+  //     });
+  //   });
+  // }
+  // Future<void> getEmail () async {
+  //   var currentUser = FirebaseAuth.instance.currentUser;
+  //   final DocumentReference document =
+  //       FirebaseFirestore.instance.collection("users").doc(currentUser!.uid);
+  //   await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
+  //     Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
+  //     setState(() {
+  //       email = data['email'];
+  //     });
+  //   });
+  // }
 }
+
+
 
