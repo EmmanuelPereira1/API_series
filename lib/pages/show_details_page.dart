@@ -349,6 +349,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                                 await myReviewDoc.set({
                                                   "owner_id": currentUser.uid,
                                                   "id": myReviewDoc.id,
+                                                  'show_name': snapshot.data!.name, 
                                                   "id_show": widget.id,
                                                   "review_text":
                                                       _reviewController.text
