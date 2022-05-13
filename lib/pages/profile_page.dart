@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 10),
                         width: 340,
                         height: 340,
                         decoration: BoxDecoration(
@@ -95,21 +95,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                     obscureText: true,
                                     decoration: InputDecoration(
                                         suffixIcon: IconButton(
-                                            onPressed: () async {
-                                              if (_formKey.currentState!
-                                                  .validate()) {
-                                                setState(() {
-                                                  newPassword =
-                                                      _newPasswordController
-                                                          .text;
-                                                });
-                                                updatePasswordDio();
-                                                updatePassword();
-                                                _changePassword(newPassword);
-                                                showMyDialog();
-                                              }
-                                            },
-                                            icon: const Icon(Icons.edit), color: Colors.amber,),
+                                          onPressed: () async {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              setState(() {
+                                                newPassword =
+                                                    _newPasswordController.text;
+                                              });
+                                              updatePasswordDio();
+                                              updatePassword();
+                                              _changePassword(newPassword);
+                                              showMyDialog();
+                                            }
+                                          },
+                                          icon: const Icon(Icons.edit),
+                                          color: Colors.amber,
+                                        ),
                                         labelText: "New Password",
                                         hintText: "Enter New Password",
                                         labelStyle: Theme.of(context)
@@ -151,13 +152,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                         .headline4!
                                         .copyWith(fontWeight: FontWeight.bold)),
                               ],
+                            ),
+                            const SizedBox(height: 30),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      
+                                    },
+                                    child: Text(
+                                      "Delete Account",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5!
+                                          .copyWith(color: const Color.fromARGB(255, 186, 18, 18), fontWeight: FontWeight.bold),
+                                    )),
+                                    const Icon(Icons.delete, size: 20, color: Color.fromARGB(255, 186, 18, 18)),
+                              ],
                             )
                           ],
                         ))
                   ],
                 ),
                 Positioned(
-                  top: 70,
+                  top: 90,
                   left: 100,
                   child: Container(
                     width: 150,

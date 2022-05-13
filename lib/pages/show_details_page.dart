@@ -286,7 +286,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   RatingBar.builder(
-                                    initialRating: 0.5,
+                                    initialRating: 0.0,
                                     minRating: 0.0,
                                     direction: Axis.horizontal,
                                     allowHalfRating: true,
