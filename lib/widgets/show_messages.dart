@@ -109,16 +109,6 @@ class _ShowMessagesState extends State<ShowMessages> {
                                 title: const Text('Delete'),
                                 onTap: () {
                                   var currentUser = FirebaseAuth.instance.currentUser;
-                                  // final reviewDoc =
-                                  //     storeMessage.collection("reviews").doc();
-                                      
-                                  // final myReviewDoc = storeMessage
-                                  //     .collection("users")
-                                  //     .doc(FirebaseAuth
-                                  //         .instance.currentUser!.uid)
-                                  //     .collection('my_reviews')
-                                  //     .doc(reviewDoc.id);
-
                                   FirebaseFirestore.instance.runTransaction(
                                       (Transaction myTransaction) async {
                                     if (currentUser!.uid == document['owner_id']) {
@@ -129,12 +119,6 @@ class _ShowMessagesState extends State<ShowMessages> {
                                     }
                                   });
                                 }
-                                // FirebaseFirestore.instance
-                                //         .runTransaction(
-                                //             (Transaction myTransaction) async {
-                                //       await myTransaction.delete(
-                                //           snapshot.data!.docs[i].reference);
-                                //     }
                                 )
                           ]);
                         });
