@@ -111,7 +111,8 @@ class _MainPageState extends State<MainPage> {
       onPageChanged: (index) {
         pageChanged(index);
       },
-      children:const <Widget>[
+
+      children: const <Widget>[
         HomePage(),
         FavoritePage(),
         ProfilePage(),
