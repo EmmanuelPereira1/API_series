@@ -54,7 +54,6 @@ class _FavoritePageState extends State<FavoritePage> {
                       title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 20),
                             Card(
                               color: Colors.white,
                               elevation: 4,
@@ -102,6 +101,19 @@ class _FavoritePageState extends State<FavoritePage> {
                                               color: Colors.grey[600],
                                             ),
                                       ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Text(document['show_name'],
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline5!
+                                                  .copyWith(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold)),
+                                        ],
+                                      )
                                     ],
                                   ),
                                 ),
