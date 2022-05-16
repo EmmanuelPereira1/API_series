@@ -22,6 +22,7 @@ class _RegisterAppState extends State<RegisterApp> {
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
   bool isRegister = false;
+  bool _isVisible = false;
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   @override
@@ -126,19 +127,25 @@ class _RegisterAppState extends State<RegisterApp> {
                            
                           ).maxLength(15).minLength(7).build(),
                           controller: passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
+                          obscureText: !_isVisible,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _isVisible = !_isVisible;
+                          });
+                        },
+                        icon: _isVisible
+                            ? const Icon(Icons.key, color: Color(0XFF026873))
+                            : const Icon(Icons.key_off, color: Colors.grey),
+                      ),
                             floatingLabelBehavior: FloatingLabelBehavior.never,
                             fillColor: Colors.white,
                             filled: true,
                             labelText: "PASSWORD",
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(25)),
-                            ),
-                            suffixIcon: Icon(
-                              Icons.key,
-                              color: Color(0XFF026873),
                             ),
                           ),
                         ),

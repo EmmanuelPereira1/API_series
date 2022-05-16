@@ -2,6 +2,7 @@ import 'package:api_series/config/gradientbackground.dart';
 import 'package:api_series/login/my_dialog.dart';
 import 'package:api_series/login/register/register.dart';
 import 'package:api_series/pages/main_page.dart';
+import 'package:api_series/pages/profile_page.dart';
 import 'package:api_series/request/get_api.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,16 +22,13 @@ class _LoginApiState extends State<LoginApi> {
   var first_nameController = TextEditingController();
   var last_nameController = TextEditingController();
   bool isLogin = false;
+  bool _isVisible = false;
   final _key = GlobalKey<FormState>();
-  // var password;
-  // var email;
 
   @override
   void initState() {
     super.initState();
     request();
-    // getEmail();
-    // getPassword();
   }
 
   @override
@@ -89,17 +87,26 @@ class _LoginApiState extends State<LoginApi> {
                             return null;
                           },
                           controller: passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
+                          obscureText: !_isVisible,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _isVisible = !_isVisible;
+                          });
+                        },
+                        icon: _isVisible
+                            ? const Icon(Icons.key, color: Color(0XFF026873))
+                            : const Icon(Icons.key_off, color: Colors.grey),
+                      ),
                             floatingLabelBehavior: FloatingLabelBehavior.never,
                             fillColor: Colors.white,
                             filled: true,
                             labelText: "PASSWORD",
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(25))),
-                            suffixIcon:
-                                Icon(Icons.key, color: Color(0XFF026873)),
+               
                           ),
                         ),
                         const SizedBox(
@@ -114,13 +121,6 @@ class _LoginApiState extends State<LoginApi> {
                             if (_key.currentState!.validate()) {
                               await login();
                               await authLogin();
-                              if (isLogin == true) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: ((context) =>
-                                            const MainPage())));
-                              }
                               setState(() {});
                             }
                           },
@@ -172,30 +172,6 @@ class _LoginApiState extends State<LoginApi> {
         password: passwordController.text.toString());
   }
 
-  // Future<Result<bool, AuthException>> login() async {
-  //   if (passwordController.text.isNotEmpty && emailController.text.isNotEmpty) {
-  //     var dio = Dio();
-  //     var url = "https://academy-auth.herokuapp.com/login";
-  //     var response = await dio.post(url,
-  //         data: ({
-  //           'email': emailController.text,
-  //           'password': passwordController.text
-  //         }));
-  //     if (response.statusCode == 201) {
-  //       isLogin = true;
-  //       return Result(data: isLogin);
-  //     } else if (response.data['error'] != null) {
-  //       return Result(
-  //           error:
-  //               AuthException(response.data['error']['message']
-  //               ));
-  //               print(response.data);
-  //     }
-  //   } else {
-  //     isLogin = false;
-  //   }
-  //   return Result(data: false);
-  // }
   Future<void> login() async {
     try {
       var dio = Dio();
