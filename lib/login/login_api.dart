@@ -3,6 +3,7 @@ import 'package:api_series/login/google_sign_in_provider.dart';
 import 'package:api_series/login/login_page.dart';
 import 'package:api_series/login/register/register.dart';
 import 'package:api_series/pages/main_page.dart';
+import 'package:api_series/pages/profile_page.dart';
 import 'package:api_series/request/get_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
@@ -26,6 +27,7 @@ class _LoginApiState extends State<LoginApi> {
   var first_nameController = TextEditingController();
   var last_nameController = TextEditingController();
   bool isLogin = false;
+  bool _isVisible = false;
 
   @override
   void initState() {
@@ -41,7 +43,6 @@ class _LoginApiState extends State<LoginApi> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       home: Scaffold(
         body: SingleChildScrollView(
           child: Container(
@@ -54,7 +55,9 @@ class _LoginApiState extends State<LoginApi> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset("lib/images/showanalytic_logo.png"),
-                      const SizedBox(height: 100,),
+                      const SizedBox(
+                        height: 100,
+                      ),
                       TextFormField(
                         controller: emailController,
                         decoration: const InputDecoration(
@@ -65,28 +68,37 @@ class _LoginApiState extends State<LoginApi> {
                           border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(25))),
-                          suffixIcon: Icon(Icons.email,
-                          color: Color(0XFF026873)),
+                          suffixIcon:
+                              Icon(Icons.email, color: Color(0XFF026873)),
                         ),
                       ),
                       const SizedBox(
                         height: 15,
                       ),
                       TextFormField(
-                       
                         controller: passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        obscureText: !_isVisible,
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _isVisible = !_isVisible;
+                          });
+                        },
+                        icon: _isVisible
+                            ? const Icon(Icons.key, color: Color(0XFF026873))
+                            : const Icon(Icons.key_off, color: Colors.grey),
+                      ),
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
                           fillColor: Colors.white,
                           filled: true,
                           labelText: "PASSWORD",
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(25))),
-                          suffixIcon: Icon(Icons.key,
-                          color: Color(0XFF026873)),
+                          // suffixIcon: Icon(Icons.key, color: Color(0XFF026873)),
                         ),
+                        
                       ),
                       const SizedBox(
                         height: 45,
@@ -104,6 +116,14 @@ class _LoginApiState extends State<LoginApi> {
                                 context,
                                 MaterialPageRoute(
                                     builder: ((context) => const MainPage())));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: ((context) => MainPage(
+                            //               email: emailController.text.trim(),
+                            //               password:
+                            //                   passwordController.text.trim(),
+                            //             ))));
                           } else {
                             _messangerKey.currentState?.showSnackBar(
                                 const SnackBar(content: Text('puts campeão')));
@@ -148,17 +168,15 @@ class _LoginApiState extends State<LoginApi> {
       ),
     );
   }
-  Future authLogin() async {
 
+  Future authLogin() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.toString(),
         password: passwordController.text.toString());
   }
 
   Future<bool> login() async {
-      
-    if (passwordController.text.isNotEmpty && 
-    emailController.text.isNotEmpty) {
+    if (passwordController.text.isNotEmpty && emailController.text.isNotEmpty) {
       var dio = Dio();
       var url = "https://academy-auth.herokuapp.com/login";
       var response = await dio.post(url,
@@ -180,9 +198,4 @@ class _LoginApiState extends State<LoginApi> {
       return false;
     }
   }
-
-  
-
-  
 }
-

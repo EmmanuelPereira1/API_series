@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +6,13 @@ import 'package:flutter/material.dart';
 import '../login/login_page.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  // final String? email;
+  // final String? password;
+  const ProfilePage({
+    Key? key,
+    // required this.email,
+    // required this.password,
+  }) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -18,11 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    getFirstName();
-    getEmail();
-    getPassword();
-    countDocuments();
-    print(password);
+    _setupPage();
   }
 
   @override
@@ -31,17 +31,27 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
-  var password;
+  Future<void> _setupPage() async {
+    await countDocuments();
+
+    await getPassword();
+    await getEmail();
+    await reauthentiacateUser();
+    await getFirstName();
+  }
+
+  String? password;
+  String? email;
   var newPassword;
   String? firstName;
-  String? email;
   int? totalReviews;
   final TextEditingController _newPasswordController = TextEditingController();
   var currentUser = FirebaseAuth.instance.currentUser;
-  final user = FirebaseAuth.instance.currentUser!;
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).viewInsets.bottom;
+
     if (firstName != null) {
       return Container(
         decoration: const BoxDecoration(
@@ -57,11 +67,11 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         child: Scaffold(
             backgroundColor: Colors.transparent,
-            body: Stack(
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                Stack(
+                  clipBehavior: Clip.none,
                   children: [
                     Container(
                         margin: const EdgeInsets.only(left: 10),
@@ -102,9 +112,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 newPassword =
                                                     _newPasswordController.text;
                                               });
-                                              updatePasswordDio();
-                                              updatePassword();
-                                              _changePassword(newPassword);
+                                              await reauthentiacateUser();
+                                              await updatePasswordDio();
+                                              await updatePassword();
+                                              await updatePasswordAuth(
+                                                  newPassword);
                                               showMyDialog();
                                             }
                                           },
@@ -158,35 +170,43 @@ class _ProfilePageState extends State<ProfilePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 TextButton(
-                                    onPressed: () {
-                                      
+                                    onPressed: () async {
+                                      await reauthentiacateUser();
+                                      await deleteAccountDio();
+                                      await deleteAccountFirebase();
                                     },
                                     child: Text(
                                       "Delete Account",
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline5!
-                                          .copyWith(color: const Color.fromARGB(255, 186, 18, 18), fontWeight: FontWeight.bold),
+                                          .copyWith(
+                                              color: const Color.fromARGB(
+                                                  255, 186, 18, 18),
+                                              fontWeight: FontWeight.bold),
                                     )),
-                                    const Icon(Icons.delete, size: 20, color: Color.fromARGB(255, 186, 18, 18)),
+                                const Icon(Icons.delete,
+                                    size: 20,
+                                    color: Color.fromARGB(255, 186, 18, 18)),
                               ],
                             )
                           ],
-                        ))
-                  ],
-                ),
-                Positioned(
-                  top: 90,
-                  left: 100,
-                  child: Container(
-                    width: 150,
-                    height: 150,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("lib/images/showanalytic_logo.png"),
+                        )),
+                    Positioned(
+                      top: -80,
+                      left: 100,
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image:
+                                AssetImage("lib/images/showanalytic_logo.png"),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             )),
@@ -246,7 +266,7 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  void countDocuments() async {
+  Future<void> countDocuments() async {
     QuerySnapshot _myDoc = await FirebaseFirestore.instance
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -256,7 +276,7 @@ class _ProfilePageState extends State<ProfilePage> {
     totalReviews = _myDocCount.length;
   }
 
-  void _changePassword(String newPassword) async {
+  Future<void> updatePasswordAuth(String newPassword) async {
     final user = await FirebaseAuth.instance.currentUser!;
     user.updatePassword(newPassword).then((_) {
       print("Successfully changed password");
@@ -265,7 +285,13 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  updatePassword() async {
+  Future<void> reauthentiacateUser() async {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email!, password: password!);
+    print("user reauthenticated");
+  }
+
+  Future<void> updatePassword() async {
     final user = FirebaseAuth.instance.currentUser!;
     final firestore = FirebaseFirestore.instance;
     if (currentUser != null) {
@@ -365,5 +391,65 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             )));
+  }
+
+  Future deleteAccountDio() async {
+    var dio = Dio();
+    var url = "https://academy-auth.herokuapp.com/delete-user";
+    var response = await dio.post(url,
+        options: Options(headers: {
+          'x-access-token':
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjI2YjFmYzdmYmE2NzkzMTZmZTRkZjkxIiwiZW1haWwiOiJwZWRybzJAdGVzdGUuY29tIiwiaWF0IjoxNjUyNDY4MTk1LCJleHAiOjE2NTUwNjAxOTV9.GelaR6dgsucBXFykJ9zcpcCaEnMT8vc7s7NULXlHa1c"
+        }),
+        data: ({
+          "email": email,
+        }));
+    if (response.statusCode == 201) {
+      print("deu certo dio");
+      response.data;
+    } else {
+      print("puts campeão");
+    }
+  }
+
+  Future deleteAccountFirebase() async {
+    bool step1 = true;
+    bool step2 = false;
+    bool step3 = false;
+    bool step4 = false;
+    while (true) {
+      if (step1) {
+        //delete user info in the database
+        var delete = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser!.uid)
+            .delete();
+        step1 = false;
+        step2 = true;
+      }
+
+      if (step2) {
+        //delete user
+        currentUser!.delete();
+        step2 = false;
+        step3 = true;
+      }
+
+      if (step3) {
+        await FirebaseAuth.instance.signOut();
+        step3 = false;
+        step4 = true;
+      }
+
+      if (step4) {
+        //go to sign up log in page
+        await Navigator.pushNamed(context, '/');
+        step4 = false;
+      }
+
+      if (!step1 && !step2 && !step3 && !step4) {
+        break;
+      }
+    }
   }
 }

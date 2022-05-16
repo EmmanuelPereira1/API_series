@@ -21,6 +21,7 @@ class _RegisterAppState extends State<RegisterApp> {
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
   bool isRegister = false;
+  bool _isVisible = false;
 
   @override
   void initState() {
@@ -112,18 +113,24 @@ class _RegisterAppState extends State<RegisterApp> {
                       ),
                       TextFormField(
                         controller: passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
+                        obscureText: !_isVisible,
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _isVisible = !_isVisible;
+                          });
+                        },
+                        icon: _isVisible
+                            ? const Icon(Icons.key, color: Color(0XFF026873))
+                            : const Icon(Icons.key_off, color: Colors.grey),
+                      ),
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           fillColor: Colors.white,
                           filled: true,
                           labelText: "PASSWORD",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(25)),
-                          ),
-                          suffixIcon: Icon(
-                            Icons.key,
-                            color: Color(0XFF026873),
                           ),
                         ),
                       ),
@@ -140,10 +147,18 @@ class _RegisterAppState extends State<RegisterApp> {
                             await signUp();
                             await saveCredentials();
                             if (isRegister == true) {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: ((context) => const MainPage())));
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) => const MainPage())));
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => MainPage(
+                                          email: emailController.text.trim(),
+                                          password:
+                                              passwordController.text.trim(),
+                                        ))));
                             } else {
                               _messangerKey.currentState?.showSnackBar(
                                   const SnackBar(content: Text('puts campeão')));
@@ -211,10 +226,8 @@ class _RegisterAppState extends State<RegisterApp> {
   }
 
   Future signUp() async {
-
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.toString(),
         password: passwordController.text.toString());
   }
-  
 }
