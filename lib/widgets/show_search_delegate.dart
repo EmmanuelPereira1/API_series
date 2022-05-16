@@ -1,11 +1,8 @@
-import 'package:api_series/config/theme.dart';
 import 'package:api_series/models/search_show_model.dart';
-import 'package:api_series/pages/main_page.dart';
 import 'package:api_series/request/fetch_search.dart';
 import 'package:api_series/request/show_list.dart';
 import 'package:api_series/widgets/search_result_card.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../config/gradientbackground.dart';
 import '../pages/show_details_page.dart';
 

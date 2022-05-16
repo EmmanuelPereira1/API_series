@@ -40,10 +40,11 @@ class _RegisterAppState extends State<RegisterApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       scaffoldMessengerKey: _messangerKey,
-      home: Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            decoration: GradientColor.gradient,
+      home: Container(
+        decoration: GradientColor.gradient,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: SafeArea(
@@ -53,6 +54,7 @@ class _RegisterAppState extends State<RegisterApp> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        const SizedBox(height: 100,),
                         Image.asset(
                           "lib/images/showanalytic_logo.png",
                           width: 270,
