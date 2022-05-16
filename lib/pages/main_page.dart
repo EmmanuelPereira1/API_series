@@ -11,12 +11,8 @@ import '../login/google_sign_in_provider.dart';
 import '../login/login_page.dart';
 
 class MainPage extends StatefulWidget {
-  final String? email;
-  final String? password;
   const MainPage({
     Key? key,
-    this.email,
-    this.password,
   }) : super(key: key);
 
   @override

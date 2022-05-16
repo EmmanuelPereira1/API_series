@@ -116,14 +116,6 @@ class _LoginApiState extends State<LoginApi> {
                                 context,
                                 MaterialPageRoute(
                                     builder: ((context) => const MainPage())));
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: ((context) => MainPage(
-                            //               email: emailController.text.trim(),
-                            //               password:
-                            //                   passwordController.text.trim(),
-                            //             ))));
                           } else {
                             _messangerKey.currentState?.showSnackBar(
                                 const SnackBar(content: Text('puts campeão')));

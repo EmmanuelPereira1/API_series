@@ -147,18 +147,10 @@ class _RegisterAppState extends State<RegisterApp> {
                             await signUp();
                             await saveCredentials();
                             if (isRegister == true) {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: ((context) => const MainPage())));
                               Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) => MainPage(
-                                          email: emailController.text.trim(),
-                                          password:
-                                              passwordController.text.trim(),
-                                        ))));
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) => const MainPage())));
                             } else {
                               _messangerKey.currentState?.showSnackBar(
                                   const SnackBar(content: Text('puts campeão')));
