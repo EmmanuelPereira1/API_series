@@ -1,4 +1,5 @@
 import 'package:api_series/config/gradientbackground.dart';
+import 'package:api_series/login/my_dialog.dart';
 import 'package:api_series/pages/main_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
@@ -154,17 +155,6 @@ class _RegisterAppState extends State<RegisterApp> {
                                 await register();
                                 await signUp();
                                 await saveCredentials();
-                                if (isRegister == true) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: ((context) =>
-                                              const MainPage())));
-                                } else {
-                                  _messangerKey.currentState?.showSnackBar(
-                                      const SnackBar(
-                                          content: Text('puts campeão')));
-                                }
                               }
                               setState(() {});
                             },
@@ -189,11 +179,8 @@ class _RegisterAppState extends State<RegisterApp> {
   }
 
 
-  Future register() async {
-    if (passwordController.text.isNotEmpty &&
-        emailController.text.isNotEmpty &&
-        firstNameController.text.isNotEmpty &&
-        lastNameController.text.isNotEmpty) {
+  Future <void> register() async {
+    try {
       var dio = Dio();
       var url = "https://academy-auth.herokuapp.com/register";
       var response = await dio.post(url,
@@ -204,12 +191,19 @@ class _RegisterAppState extends State<RegisterApp> {
             'password': passwordController.text
           }));
       if (response.statusCode == 201) {
-        // FirebaseAuth.instance.currentUser!.isAnonymous;
-        response.data;
-        isRegister = true;
-      } else {
-        return isRegister = false;
-      }
+        Navigator.push(
+         context,
+          MaterialPageRoute(
+          builder: ((context) =>
+         const MainPage())));
+      } else {}
+    } on DioError catch (e) {
+      myDialog(
+      context,
+      'Failed',
+      '${e.response}',
+      'Ok',
+      () => Navigator.pop(context));
     }
   }
 

@@ -31,34 +31,6 @@ class _HomePageState extends State<HomePage> {
             searchDelegate: ShowSearchDelegate(showsList: showsList)),
         body: const ShowsList(),
         drawer: const CustomDrawer(),
-        // drawer: Drawer(
-        //     backgroundColor: Colors.transparent,
-        //     child: Container(
-        //         decoration: GradientColor.gradient,
-        //         child: ListView(children: <Widget>[
-        //           DrawerHeader(
-        //               child: Image.asset(
-        //             'lib/images/showanalytic_logo.png',
-        //             width: 50,
-        //           )),
-        //           ListTile(
-        //             leading: const Icon(Icons.login, color: Colors.white),
-        //             title: const Text(
-        //               "LOGOUT",
-        //               style: TextStyle(
-        //                 color: Colors.white,
-        //               ),
-        //             ),
-        //             onTap: () {
-        //               FirebaseAuth.instance.signOut();
-        //               Navigator.of(context).pushReplacement(
-        //                 MaterialPageRoute(
-        //                   builder: (context) => const LoginPage() 
-        //                 )
-        //               );
-        //               },
-        //           ),
-        //         ]))),
         backgroundColor: Colors.transparent,
       ),
     );

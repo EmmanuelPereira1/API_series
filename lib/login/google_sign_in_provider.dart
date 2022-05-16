@@ -44,5 +44,4 @@ Future saveCredentialsGoogle() async {
       });
     }
   }
-  
 }

@@ -16,7 +16,6 @@ class LoginPage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData ){
-            // saveCredentialsGoogle();
             return const MainPage();
           } else if (snapshot.hasError) {
             return const Center(child: Text("Something went wrong"));
