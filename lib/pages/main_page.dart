@@ -1,3 +1,4 @@
+
 import 'package:api_series/pages/favorite_page.dart';
 import 'package:api_series/pages/home_page.dart';
 import 'package:api_series/pages/profile_page.dart';
