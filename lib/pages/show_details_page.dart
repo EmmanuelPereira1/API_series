@@ -94,7 +94,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             width: 451,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
-                                begin: Alignment.center,
+                                begin: Alignment.bottomCenter,
                                 end: Alignment.topCenter,
                                 colors: [
                                   Color(0xCC000000),
@@ -102,49 +102,69 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                 ],
                               ),
                             ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(15, 335, 30, 2),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(snapshot.data!.name,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline2!
-                                        .copyWith(fontWeight: FontWeight.bold)),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(snapshot.data!.status,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline4!
-                                            .copyWith(
-                                                fontWeight: FontWeight.normal)),
-                                    const SizedBox(width: 6),
-                                    const Icon(Icons.circle,
-                                        color: Colors.white, size: 6),
-                                    const SizedBox(width: 6),
-                                    Text(snapshot.data!.country,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline4!
-                                            .copyWith(
-                                                fontWeight: FontWeight.normal)),
-                                    const SizedBox(width: 6),
-                                    const Icon(Icons.circle,
-                                        color: Colors.white, size: 6),
-                                    const SizedBox(width: 6),
-                                    Text(snapshot.data!.network,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline4!
-                                            .copyWith(
-                                                fontWeight: FontWeight.normal)),
-                                  ],
-                                ),
-                              ],
+                            child: Container(
+                              margin: const EdgeInsets.fromLTRB(15, 0, 0, 15),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Wrap(
+                                    // crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(snapshot.data!.name,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(snapshot.data!.status,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4!
+                                              .copyWith(
+                                                  fontWeight:
+                                                      FontWeight.normal)),
+                                      const SizedBox(width: 6),
+                                      Column(
+                                        children: const [
+                                          Icon(Icons.circle,
+                                              color: Colors.white, size: 6),
+                                              SizedBox(height: 10)
+                                        ],
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(snapshot.data!.country,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4!
+                                              .copyWith(
+                                                  fontWeight:
+                                                      FontWeight.normal)),
+                                      const SizedBox(width: 6),
+                                      Column(
+                                        children: const [
+                                          Icon(Icons.circle,
+                                              color: Colors.white, size: 6),
+                                              SizedBox(height: 10)
+                                        ],
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(snapshot.data!.network,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4!
+                                              .copyWith(
+                                                  fontWeight:
+                                                      FontWeight.normal)),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -249,7 +269,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                 padding: const EdgeInsets.only(left: 20),
                                 child: Column(
                                   children: [
-                                    Row(
+                                    Wrap(
                                       children: [
                                         Text("Rate ",
                                             style: Theme.of(context)
@@ -267,16 +287,10 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                       ],
                                     ),
                                     const SizedBox(height: 10),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          color: Colors.grey[350],
-                                          width: 205,
-                                          height: 1,
-                                        ),
-                                      ],
+                                    Container(
+                                      color: Colors.grey[350],
+                                      width: 205,
+                                      height: 1,
                                     ),
                                   ],
                                 ),
@@ -325,8 +339,10 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                         suffixIcon: IconButton(
                                             onPressed: () async {
                                               if (_reviewController
-                                                  .text.isNotEmpty && ratingReview != null) {
-                                                    var currentUser = FirebaseAuth.instance.currentUser;
+                                                      .text.isNotEmpty &&
+                                                  ratingReview != null) {
+                                                var currentUser = FirebaseAuth
+                                                    .instance.currentUser;
                                                 final reviewDoc = storeMessage
                                                     .collection("reviews")
                                                     .doc();
@@ -349,7 +365,8 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                                 await myReviewDoc.set({
                                                   "owner_id": currentUser.uid,
                                                   "id": myReviewDoc.id,
-                                                  'show_name': snapshot.data!.name, 
+                                                  'show_name':
+                                                      snapshot.data!.name,
                                                   "id_show": widget.id,
                                                   "review_text":
                                                       _reviewController.text
