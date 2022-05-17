@@ -90,7 +90,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             ),
                           ),
                           Container(
-                            height: 410,
+                            height: 443,
                             width: 451,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
